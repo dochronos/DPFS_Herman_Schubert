@@ -1,147 +1,74 @@
-# INSTRUCCIONES: CARRITO DE COMPRA
+# Quantum Bloom Space 🌸✨
+Proyecto Final - Digital House | Desarrollo Web Full Stack
 
-## Requisitos
+## 📁 DPFS_Herman_Schubert
 
-Tener instaladas las siguientes herramientas:
+Este repositorio contiene el proyecto final del curso de Desarrollo Web Full Stack, compuesto por:
 
-- [Node.js](https://nodejs.org/)
-- [npm](https://www.npmjs.com/)
-- (Opcional) [Git](https://git-scm.com/) para clonar el repositorio
+- ✨ Un **backend en Node.js + Express + Sequelize + MySQL** que gestiona productos, usuarios, autenticación, ventas y carrito.
+- 📊 Un **dashboard administrativo** construido con **React + Vite** para visualizar estadísticas de ventas, usuarios y productos.
+- 🎨 Estética inspirada en el concepto de **Quantum Bloom Space**, con un enfoque relajado y minimalista.
 
-## Pasos
+---
 
-Usando la consola de comandos del sistema operativo:
+## 🧰 Tecnologías utilizadas
 
-1. Clonar repositorio:
+### Backend:
+- Node.js
+- Express.js
+- EJS (para vistas del frontend tradicional)
+- Sequelize (ORM)
+- MySQL
+- Swagger (documentación de API)
+- Multer (subida de imágenes)
+- bcryptjs (hash de contraseñas)
+- express-validator
+
+### Frontend (Dashboard):
+- React
+- Vite
+- React Router DOM
+- MUI X Charts (gráfico de torta)
+- Fetch API
+
+---
+
+## 🚀 Instrucciones para ejecutar el proyecto
+
+### 📦 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/federicofilipoff/DPFS_federico_filipoff
-```
+git clone https://github.com/TU_USUARIO/DPFS_Herman_Schubert.git
+cd DPFS_Herman_Schubert
 
-2. Dirigirse a la carpeta del proyecto:
-
-```bash
-cd DPFS_federico_filipoff
-```
-
-3. Instalar dependencias:
-
-```bash
+⚙️ 2. Backend - Instalación y ejecución
+bash
+Copiar
+Editar
+cd backend
 npm install
-```
+npm run start
+El servidor correrá en: http://localhost:3000
 
-4.  Crear base de datos y poblar las tablas con datos.
+Documentación de API: http://localhost:3000/api-docs
 
-```bash
-node src/database/config/syncDatabase.js
-```
+⚠️ Asegurate de tener una base de datos MySQL creada y configurada en src/database/config/config.js.
 
-```bash
+🧪 Seed de datos (opcional)
+bash
+Copiar
+Editar
 npx sequelize-cli db:seed:all
-```
+Esto cargará categorías, productos, usuarios, carritos, colores y relaciones de ejemplo.
 
-Nota 1: el sprint 6 solicita crear datos mediante SQL (extensión .sql).
-En este caso preferí sincronizar los modelos para crear la base de datos
-y sus datos mediante el ORM para no depender de MySQL Workbench.
-Además facilita la encriptación de contraseñas de los usuarios modelos.
-
-Nota 2: Contraseñas de usuarios
-Los usuarios creados por script inician sesión con la siguiente contraseña: 123
-
-5.  Ejecutar Back-end:
-
-```bash
-nodemon
-```
-
-6. Ejecutar Front-end usando otra instancia de la consola de comandos del sistema operativo:
-
-```bash
+📊 3. Frontend - Dashboard
+bash
+Copiar
+Editar
 cd dashboard
-```
-
-```bash
-npm install vite --save-dev
-```
-
-```bash
+npm install
 npm run dev
-```
+El dashboard estará disponible en: http://localhost:5173
 
-# APIs
-
-Las APIs las documenté usando Swagger.
-Se puede acceder a dicha documentación desde la URL que se indica en la consola al ejecutar el servidor.
-
-# SPRINT 1
-
-## Temática del sitio y Público objetivo
-
-### **Temática**
-
-Venta minorísta de artículos para PC: teclados, mouses, auriculares.
-
-### **Público objetivo**
-
-El sitio web esta dirigido a usuarios casuales o no.
-Ofreciendo opciones variadas en calidad y precio, para profesionales o gamers
-con mayores exigencias, así como para aquellos que prefieren alternativas más económicas.
-
-## Sitios web referentes
-
-- [Mexx](https://www.mexx.com.ar/)
-- [Precio Calidad](https://www.precio-calidad.com.ar/)
-- [Seven Electronics](https://www.sevenelectronics.com.ar/)
-- [CompuMax](https://compumax.com.ar/)
-- [Morshop](https://www.morshop.com.ar/)
-- [Mercado Libre](https://www.mercadolibre.com.ar/)
-
-Elegí los sitios mencionados ya que comparten una estructura similar:
-
-- Registro y acceso de usuarios
-- Catálogo de artículos y funcionalidad de búsqueda.
-- Incoporar artículos a un carrito de compra.
-
-Considero que estos sitios cubren los aspectos básicos de una tienda virtual.
-
-# SPRINT 2
-
-## Tablero de trabajo
-
-https://github.com/users/federicofilipoff/projects/2
-
-# SPRINT 3
-
-## Tablero de trabajo
-
-https://github.com/users/federicofilipoff/projects/3
-
-# SPRINT 4
-
-## Tablero de trabajo
-
-https://github.com/users/federicofilipoff/projects/4
-
-# SPRINT 5
-
-## Tablero de trabajo
-
-https://github.com/users/federicofilipoff/projects/5
-
-# SPRINT 6
-
-## Tablero de trabajo
-
-https://github.com/users/federicofilipoff/projects/6
-
-# SPRINT 7
-
-## Tablero de trabajo
-
-https://github.com/users/federicofilipoff/projects/7
-
-# SPRINT 8
-
-## Tablero de trabajo
-
-https://github.com/users/federicofilipoff/projects/8
+📚 Licencia
+Este proyecto fue desarrollado con fines educativos como parte del curso de Desarrollo Web Full Stack en Digital House. Todos los recursos utilizados fueron debidamente referenciados o generados para uso libre no comercial.
