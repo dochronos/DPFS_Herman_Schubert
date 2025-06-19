@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<%- include('../partials/head.ejs', { title: 'Confirmación de Compra', stylesheets: [] }) %>
+
+<body>
+    <%- include('../partials/header.ejs') %>
+
+    <main class="container py-5 text-center">
+        <div class="alert alert-success rounded-4 shadow-sm py-5 px-4">
+            <h1 class="fw-bold mb-3" style="font-family: 'Montserrat', sans-serif; color: #6c5ce7;">
+                <%= message %>
+            </h1>
+            <p class="fs-5" style="font-family: 'Garamond', serif;">¡Gracias por tu compra! Esperamos que disfrutes tu experiencia con QuantumBloom.</p>
+            <a href="/products" class="btn btn-lg mt-4 px-4 py-2 text-white fw-semibold"
+                style="background-color: #6c5ce7; border: none; font-family: 'Montserrat', sans-serif; border-radius: 12px;">
+                Seguir explorando
+            </a>
+        </div>
+    </main>
+
+    <%- include('../partials/footer.ejs') %>
+</body>
+</html>

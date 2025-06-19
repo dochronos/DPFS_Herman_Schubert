@@ -1,0 +1,126 @@
+/* Importar fuentes desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Garamond&family=Montserrat:wght@300;400;600&display=swap');
+
+/* Configuraciones generales */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  background-color: #E8DED2;
+  color: #5D4C59;
+}
+
+/* Tipografía para títulos y encabezados */
+h1, h2, h3, h4, h5, h6, .navbar-brand, .gradiente {
+  font-family: 'Garamond', serif;
+}
+
+/* Tipografía para texto general */
+p, a, li, button, input, textarea {
+  font-family: 'Montserrat', sans-serif;
+}
+
+main {
+  margin-top: 10%;
+  margin-bottom: 5%;
+}
+
+a {
+  text-decoration: none;
+  color: #5D4C59;
+}
+
+a:hover {
+  color: #D4A373;
+}
+
+a,
+svg,
+button {
+  transition: ease 0.33s;
+}
+
+/* header styles */
+.imagen-perfil {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.nav-link {
+  color: #5D4C59;
+}
+
+.nav-link:hover {
+  color: #D4A373;
+}
+
+.nav-link svg {
+  fill: #5D4C59;
+}
+
+.nav-link svg:hover {
+  fill: #D4A373;
+}
+
+/* footer styles */
+footer {
+  background-color: #F9F6F1;
+  padding: 2rem;
+  color: #5D4C59;
+}
+
+footer h2 {
+  color: #D4A373;
+}
+
+footer a {
+  color: #5D4C59;
+}
+
+footer a:hover {
+  color: #A8B2A1;
+}
+
+footer svg:hover {
+  transform: translateY(3px);
+  fill: #A8B2A1;
+}
+
+/* Estilos para Perfil */
+.profile-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Estilos para tarjetas productos */
+.product-card {
+  transition: 0.25s ease;
+  box-shadow: 0 3px 3px rgba(93, 76, 89, 0.2);
+  background-color: #F9F6F1;
+  border: 1px solid #C7BAB0;
+}
+
+.product-card:hover {
+  transform: scale(1.01);
+  box-shadow: 0 8px 8px rgba(93, 76, 89, 0.2);
+}
+
+/* LOGOTIPO */
+.navbar-brand {
+  font-weight: 700;
+  font-size: 20px;
+  color: #5D4C59 !important;
+}
+
+.gradiente {
+  background: none;
+  color: #5D4C59;
+}

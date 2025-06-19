@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<%- include('../partials/head.ejs', {
+    title: 'Editar Producto',
+    stylesheets: []
+}) %>
+
+<body>
+
+    <%- include('../partials/header.ejs') %>
+
+    <main>
+        <%- include('../partials/productForm.ejs', {
+            formClass: 'editarProducto',
+            formAction: '/products/' + product.id + '?_method=PUT',
+            formMethod: 'PUT',
+            formTitle: 'Editar Producto',
+            buttonText: 'Guardar cambios',
+            brands: brands,
+            categories: categories,
+            colors: colors,
+            product: product
+        }) %>
+    </main>
+
+    <%- include('../partials/footer.ejs') %>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/validatorjs/2.0.0/validator.min.js"></script>
+    <script src="/javascripts/productValidation.js"></script>
+
+</body>
+</html>

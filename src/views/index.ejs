@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<%- include('./partials/head.ejs', {
+    title: 'QuantumBloom - Bienvenido',
+    stylesheets: []
+}) %>
+
+<body>
+
+  <%- include('./partials/header.ejs') %>
+
+  <!-- Hero principal -->
+  <section class="py-5 text-center" style="background-color: #F6F4EF;">
+    <div class="container">
+      <img src="/images/logo/quantumbloom-logo.jpg" alt="QuantumBloom" class="mb-3" style="max-height: 80px;">
+      <h1 style="font-family: 'Garamond', serif;" class="mb-3">Bienvenido a QuantumBloom Space</h1>
+      <p class="lead" style="max-width: 600px; margin: auto; font-family: 'Montserrat', sans-serif;">
+        Encontrá inspiración en cada detalle. Planners, deco minimalista y objetos pensados para regalarte calma y creatividad.
+      </p>
+      <a href="/products" class="btn btn-outline-dark mt-4">Ver productos</a>
+    </div>
+  </section>
+
+  <!-- Productos destacados -->
+  <main class="catalogo mt-5">
+    <div class="container">
+      <h2 class="text-center mb-4" style="font-family: 'Garamond', serif;">Nuestros favoritos</h2>
+      <div class="row justify-content-center">
+        <% products.slice(0, 2).forEach(product => { %>
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 bg-light product-card">
+              <a href="/products/<%= product.id %>" class="text-decoration-none text-dark">
+                <img src="/images/quantumbloom/<%= product.image %>" class="card-img-top img-fluid" alt="<%= product.name %>"
+                  style="height: 220px; width: 100%; object-fit: cover;">
+                <div class="card-body">
+                  <h5 class="card-title fw-bold" style="font-family: 'Montserrat', sans-serif;"><%= product.name %></h5>
+                  <p class="card-text" style="font-family: 'Montserrat', sans-serif;"><%= product.description %></p>
+                  <p class="card-text" style="font-family: 'Montserrat', sans-serif;">
+                    <span class="fw-bold">Precio:</span> $<%= product.price %>
+                  </p>
+                </div>
+              </a>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+  </main>
+
+  <!-- SOBRE NOSOTROS -->
+  <section class="py-5" style="background-color: #F6F4EF;">
+    <div class="container text-center">
+      <h2 style="font-family: 'Garamond', serif;">Nuestra esencia</h2>
+      <p class="lead mt-3" style="max-width: 720px; margin: auto; font-family: 'Montserrat', sans-serif;">
+        En QuantumBloom creemos que la calma también se diseña. Por eso creamos objetos pensados para equilibrar tus espacios y acompañarte en cada momento: desde una taza en tu escritorio hasta un planner que organiza tu rutina con estilo y propósito.
+      </p>
+      <img src="/images/quantumbloom/ambientacion-zen.jpg" alt="Decoración QuantumBloom" class="img-fluid rounded mt-4 shadow-sm"
+        style="max-height: 300px; object-fit: cover;">
+    </div>
+  </section>
+
+  <%- include('./partials/footer.ejs') %>
+
+</body>
+</html>

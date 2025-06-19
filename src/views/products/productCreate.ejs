@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<%- include('../partials/head.ejs', {
+    title: 'Registrar producto - QuantumBloom',
+    stylesheets: []
+}) %>
+
+<body>
+
+    <%- include('../partials/header.ejs') %>
+
+    <main class="my-5">
+        <%- include('../partials/productForm.ejs', {
+            formClass: 'crearProducto',
+            formAction: '/products/',
+            formMethod: 'POST',
+            formTitle: 'Registrar nuevo producto',
+            buttonText: 'Guardar producto',
+            brands: brands,
+            categories: categories,
+            colors: colors,
+            product: null
+        }) %>
+    </main>
+
+    <%- include('../partials/footer.ejs') %>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/validatorjs/2.0.0/validator.min.js"></script>
+    <script src="/javascripts/productValidation.js"></script>
+
+</body>
+</html>

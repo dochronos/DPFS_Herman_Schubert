@@ -1,0 +1,64 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Node modules
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+coverage/
+
+# dotenv environment variables
+.env
+.env.*
+
+# Local database files (optional: si llegás a usar SQLite)
+*.sqlite
+*.sqlite3
+*.db
+
+# Editor folders
+.vscode/
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Compiled Swagger docs (si generás docs con Swagger-CLI)
+swagger-output.json
+
+# Sequelize CLI files (temporal outputs)
+.sequelizerc
+models/*.js~
+migrations/*.js~
+seeders/*.js~
+
+# Public uploads or temporary assets
+/public/uploads/
+/public/temp/
+/public/images/quantumbloom/placeholder-*.png
+
+# PM2 process files
+pids
+*.pid
+*.seed
+
+# Dashboard dev files (si tenés exportaciones temporales o backups)
+dashboard/**/*.bak
+dashboard/**/*.tmp
+
+# Others
+*.log.*
+*.tgz
+npm-packages-offline-cache/

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<%- include('../partials/head.ejs', { title: data.name , stylesheets: [] }) %>
+
+<body>
+    <%- include('../partials/header.ejs') %>
+
+    <main class="container my-5">
+
+        <section class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card bg-light shadow border-0">
+                    <div class="row g-0 align-items-center">
+
+                        <!-- Imagen -->
+                        <div class="col-md-6">
+                            <img src="/images/quantumbloom/<%= data.image %>" alt="<%= data.name %>"
+                                class="img-fluid rounded-start" style="object-fit: cover; height: 100%; width: 100%;">
+                        </div>
+
+                        <!-- Detalles -->
+                        <div class="col-md-6 p-4">
+                            <div class="card-body">
+
+                                <h1 class="fw-bold mb-3" style="font-family: 'Garamond', serif;">
+                                    <%= data.name %>
+                                </h1>
+
+                                <p><strong>Categoría:</strong> <%= data.Category.name %></p>
+                                <p><strong>Marca:</strong> <%= data.Brand.name %></p>
+
+                                <p><strong>Descripción:</strong></p>
+                                <p style="font-family: 'Montserrat', sans-serif;">
+                                    <%= data.description %>
+                                </p>
+
+                                <% if (data.size) { %>
+                                    <p><strong>Dimensiones:</strong> <%= data.size %></p>
+                                <% } %>
+
+                                <% if (data.Colors && data.Colors.length > 0) { %>
+                                    <p><strong>Colores disponibles:</strong> <%= data.Colors.map(color => color.name).join(", ") %></p>
+                                <% } %>
+
+                                <% if (data.officialWeb) { %>
+                                    <a href="<%= data.officialWeb %>" target="_blank" class="btn btn-outline-secondary btn-sm mt-2">
+                                        Ver sitio oficial
+                                    </a>
+                                <% } %>
+
+                                <p class="fs-4 fw-bold text-success mt-4">Precio: $<%= data.price %></p>
+
+                                <% if (user) { %>
+                                    <form action="/products/addItem/<%= data.id %>" method="POST">
+                                        <input type="hidden" name="quantity" value="1">
+                                        <button type="submit" class="btn btn-dark w-100 mt-2">
+                                            Agregar al carrito
+                                        </button>
+                                    </form>
+                                <% } else { %>
+                                    <form action="/users/requirelogin" method="GET">
+                                        <button type="submit" class="btn btn-dark w-100 mt-2">
+                                            Iniciar sesión para comprar
+                                        </button>
+                                    </form>
+                                <% } %>
+
+                                <% if (user && user.category === 'admin') { %>
+                                    <div class="d-flex gap-2 mt-4">
+                                        <a href="<%= data.id %>/edit" class="btn btn-outline-primary w-50">Editar</a>
+                                        <form action="/products/<%= data.id %>?_method=DELETE" method="POST"
+                                            onsubmit="return confirm('¿Estás seguro de que querés eliminar este producto?');">
+                                            <button type="submit" class="btn btn-outline-danger w-50">Eliminar</button>
+                                        </form>
+                                    </div>
+                                <% } %>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <%- include('../partials/footer.ejs') %>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<%- include('./partials/head.ejs', { title: 'Error', stylesheets: [] }) %>
+
+<body>
+  <%- include('./partials/header.ejs') %>
+
+  <main class="container text-center mt-5">
+    <div class="alert alert-danger p-5 shadow rounded">
+      <h1 class="display-4 mb-4" style="font-family: Garamond, serif;">
+        ¡Algo salió mal!
+      </h1>
+
+      <h2 class="text-danger fw-bold">
+        <%= message %>
+      </h2>
+
+      <% if (error.status) { %>
+        <p class="text-muted">Código de estado: <strong><%= error.status %></strong></p>
+      <% } %>
+
+      <% if (error.stack) { %>
+        <div class="text-start mt-4 p-3 bg-white border rounded shadow-sm overflow-auto">
+          <pre class="small text-secondary"><%= error.stack %></pre>
+        </div>
+      <% } %>
+
+      <a href="/" class="btn btn-outline-primary mt-4">Volver al inicio</a>
+    </div>
+  </main>
+
+  <%- include('./partials/footer.ejs') %>
+</body>
+
+</html>

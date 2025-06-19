@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<%- include('../partials/head.ejs', {
+    title: 'Editar Usuario',
+    stylesheets: []
+}) %>
+
+<body>
+
+    <%- include('../partials/header.ejs') %>
+
+    <main>
+        <%- include('../partials/userForm.ejs', {
+            formTitle: 'Editar Usuario',
+            isRegister: false
+        }) %>
+    </main>
+
+    <%- include('../partials/footer.ejs') %>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/validatorjs/2.0.0/validator.min.js"></script>
+    <script src="/javascripts/passwordVisibility.js"></script>
+    <script src="/javascripts/userValidation.js"></script>
+
+</body>
+</html>
