@@ -1,3 +1,5 @@
+"use strict";
+
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("loginForm");
   const emailInput = document.getElementById("email");
@@ -5,39 +7,43 @@ document.addEventListener("DOMContentLoaded", () => {
   const emailError = document.getElementById("emailError");
   const passwordError = document.getElementById("passwordError");
 
-  loginForm.addEventListener("submit", async (event) => {
-    event.preventDefault(); // Prevenir el envío inicial del formulario
-    let valid = true;
+  if (!loginForm || !emailInput || !passwordInput || !emailError || !passwordError) {
+    console.warn("No se encontraron elementos necesarios para la validación.");
+    return;
+  }
 
-    // Limpiar errores anteriores
+  loginForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    let isValid = true;
+
+    // Limpiar mensajes de error anteriores
     emailError.textContent = "";
     passwordError.textContent = "";
 
-    // Validar localmente
-    if (!emailInput.value) {
-      emailError.textContent = "Campo requerido";
-      valid = false;
-    } else if (!validateEmail(emailInput.value)) {
+    // Validación de email
+    if (!emailInput.value.trim()) {
+      emailError.textContent = "Campo requerido.";
+      isValid = false;
+    } else if (!isValidEmail(emailInput.value)) {
       emailError.textContent = "Ingrese un correo electrónico válido.";
-      valid = false;
+      isValid = false;
     }
 
-    if (!passwordInput.value) {
-      passwordError.textContent = "Campo requerido";
-      valid = false;
+    // Validación de contraseña
+    if (!passwordInput.value.trim()) {
+      passwordError.textContent = "Campo requerido.";
+      isValid = false;
     }
 
-    if (!valid) return;
+    if (!isValid) return;
 
-    // Validar en el servidor
+    // Envío para validación en el servidor
     try {
       const response = await fetch("/api/users/check-credentials", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: emailInput.value,
+          email: emailInput.value.trim(),
           password: passwordInput.value,
         }),
       });
@@ -53,14 +59,14 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Si no hay error envía el formulario
+      // Si la validación es exitosa, enviar formulario
       loginForm.submit();
     } catch (error) {
-      console.error("Error al validar en el servidor:", error);
+      console.error("Error en la validación del servidor:", error);
     }
   });
 
-  function validateEmail(email) {
+  function isValidEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
   }
