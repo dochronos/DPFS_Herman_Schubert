@@ -1,5 +1,8 @@
+"use strict";
+
 document.addEventListener("DOMContentLoaded", () => {
   const userForm = document.getElementById("userForm");
+
   const firstName = document.getElementById("firstName");
   const lastName = document.getElementById("lastName");
   const email = document.getElementById("email");
@@ -13,34 +16,34 @@ document.addEventListener("DOMContentLoaded", () => {
   const profileImageError = document.getElementById("profileImageError");
 
   const loggedUserEmail = userForm.dataset.loggedUserEmail;
+  const isCreateAction = userForm.dataset.action === "crearUsuario";
 
   userForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     let valid = true;
 
-    // Validar Nombre
+    // --- Validar Nombre ---
+    firstNameError.textContent = "";
     if (!firstName.value.trim()) {
       firstNameError.textContent = "Campo requerido";
       valid = false;
     } else if (firstName.value.trim().length < 2) {
-      firstNameError.textContent = "El Campo debe tener al menos 2 caracteres";
+      firstNameError.textContent = "Debe tener al menos 2 caracteres";
       valid = false;
-    } else {
-      firstNameError.textContent = "";
     }
 
-    // Validar Apellido
+    // --- Validar Apellido ---
+    lastNameError.textContent = "";
     if (!lastName.value.trim()) {
       lastNameError.textContent = "Campo requerido";
       valid = false;
     } else if (lastName.value.trim().length < 2) {
-      lastNameError.textContent = "El Campo debe tener al menos 2 caracteres";
+      lastNameError.textContent = "Debe tener al menos 2 caracteres";
       valid = false;
-    } else {
-      lastNameError.textContent = "";
     }
 
-    // Validar correo electrónico
+    // --- Validar Email ---
+    emailError.textContent = "";
     if (!email.value.trim()) {
       emailError.textContent = "Campo requerido";
       valid = false;
@@ -51,98 +54,68 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         const response = await fetch("/api/users/check-email", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             email: email.value,
             currentEmail: loggedUserEmail,
-          }), // loggedUserEmail es el correo actual del usuario
+          }),
         });
 
         const result = await response.json();
 
-        if (response.status === 200) {
-          if (result.msg === "Correo actual del usuario logueado.") {
-            emailError.textContent = ""; // No hay error si es el correo actual
-          } else {
-            emailError.textContent = "";
-          }
-        } else if (response.status === 404) {
+        if (response.status === 404) {
           emailError.textContent = "El correo ya está en uso. Ingresá otro.";
           valid = false;
-        } else {
+        } else if (!response.ok) {
           emailError.textContent = "Error al verificar el correo.";
           valid = false;
         }
-      } catch (error) {
+      } catch {
         emailError.textContent = "Error de conexión con el servidor.";
         valid = false;
       }
     }
 
-    // Validar Contraseña
+    // --- Validar Contraseña ---
+    passwordError.textContent = "";
     if (password) {
-      if (
-        !password.value.trim() &&
-        userForm.dataset.action === "crearUsuario"
-      ) {
+      const passwordValue = password.value.trim();
+      if (!passwordValue && isCreateAction) {
         passwordError.textContent = "Campo requerido";
         valid = false;
-      } else if (password.value.trim() && !validatePassword(password.value)) {
+      } else if (passwordValue && !validatePassword(passwordValue)) {
         passwordError.textContent =
-          "La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, una minúscula, un número y un carácter especial.";
+          "Debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.";
         valid = false;
-      } else {
-        passwordError.textContent = "";
       }
     }
 
-    // Validar Imagen
+    // --- Validar Imagen ---
+    profileImageError.textContent = "";
     if (profileImage.files.length > 0) {
       const file = profileImage.files[0];
-      const validExtensions = [
-        "image/jpeg",
-        "image/jpg",
-        "image/png",
-        "image/gif",
-      ];
-
+      const validExtensions = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
       if (!validExtensions.includes(file.type)) {
-        profileImageError.textContent =
-          "La imagen debe ser JPG, JPEG, PNG o GIF.";
+        profileImageError.textContent = "Debe ser JPG, JPEG, PNG o GIF.";
         valid = false;
-      } else {
-        profileImageError.textContent = "";
       }
     }
 
-    // Enviar el formulario si es válido
-    if (valid) {
-      userForm.submit();
-    }
+    if (valid) userForm.submit();
   });
 
-  // Función para validar formato de correo electrónico
   function validateEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
   }
 
-  // Función para validar contraseña
   function validatePassword(password) {
-    const minLength = /.{8,}/;
-    const hasUppercase = /[A-Z]/;
-    const hasLowercase = /[a-z]/;
-    const hasNumber = /[0-9]/;
-    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
-
     return (
-      minLength.test(password) &&
-      hasUppercase.test(password) &&
-      hasLowercase.test(password) &&
-      hasNumber.test(password) &&
-      hasSpecialChar.test(password)
+      /.{8,}/.test(password) &&
+      /[A-Z]/.test(password) &&
+      /[a-z]/.test(password) &&
+      /[0-9]/.test(password) &&
+      /[!@#$%^&*(),.?":{}|<>]/.test(password)
     );
   }
 });
