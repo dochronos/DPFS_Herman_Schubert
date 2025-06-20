@@ -1,6 +1,13 @@
 const db = require("../../database/models");
 
-let cartControllers = {
+const actualizarTotalCarrito = async (cartId) => {
+  const total = await db.CartItem.sum("price", { where: { cart_id: cartId } }) || 0;
+  const cart = await db.ShoppingCart.findByPk(cartId);
+  cart.total = total;
+  await cart.save();
+};
+
+const cartControllers = {
   addToCart: async (req, res) => {
     try {
       if (!req.session.user) {
@@ -8,7 +15,7 @@ let cartControllers = {
       }
 
       const userId = req.session.user.id;
-      const productId = req.params.id;
+      const productId = Number(req.params.id);
       const quantity = parseInt(req.body.quantity, 10) || 1;
 
       let cart = await db.ShoppingCart.findOne({ where: { user_id: userId } });
@@ -16,14 +23,14 @@ let cartControllers = {
         cart = await db.ShoppingCart.create({ user_id: userId, total: 0 });
       }
 
-      let cartItem = await db.CartItem.findOne({
-        where: { cart_id: cart.id, product_id: productId },
-      });
-
       const product = await db.Product.findByPk(productId);
       if (!product) {
         return res.status(404).send("Producto no encontrado.");
       }
+
+      let cartItem = await db.CartItem.findOne({
+        where: { cart_id: cart.id, product_id: productId },
+      });
 
       if (cartItem) {
         cartItem.quantity += quantity;
@@ -38,13 +45,7 @@ let cartControllers = {
         });
       }
 
-      const cartItems = await db.CartItem.findAll({ where: { cart_id: cart.id } });
-      const newTotal = cartItems.reduce((sum, item) => sum + Number(item.price), 0);
-
-      if (isNaN(newTotal)) throw new Error("El total del carrito no es válido.");
-
-      cart.total = newTotal;
-      await cart.save();
+      await actualizarTotalCarrito(cart.id);
 
       res.redirect(`/products/${productId}`);
     } catch (error) {
@@ -57,9 +58,9 @@ let cartControllers = {
     try {
       const userId = req.session.user.id;
 
-      let cart = await db.ShoppingCart.findOne({
+      const cart = await db.ShoppingCart.findOne({
         where: { user_id: userId },
-        include: [{ model: db.CartItem, include: [{ model: db.Product }] }],
+        include: [{ model: db.CartItem, include: [db.Product] }],
       });
 
       if (!cart || cart.CartItems.length === 0) {
@@ -81,9 +82,9 @@ let cartControllers = {
 
   increaseItem: async (req, res) => {
     try {
-      const cartItemId = req.params.id;
-      let cartItem = await db.CartItem.findByPk(cartItemId);
-      if (!cartItem) return res.status(404).send("Item no encontrado en el carrito.");
+      const cartItemId = Number(req.params.id);
+      const cartItem = await db.CartItem.findByPk(cartItemId);
+      if (!cartItem) return res.status(404).send("Item no encontrado.");
 
       const product = await db.Product.findByPk(cartItem.product_id);
       if (!product) return res.status(404).send("Producto no encontrado.");
@@ -92,9 +93,7 @@ let cartControllers = {
       cartItem.price = product.price * cartItem.quantity;
       await cartItem.save();
 
-      const cart = await db.ShoppingCart.findByPk(cartItem.cart_id);
-      cart.total = await db.CartItem.sum("price", { where: { cart_id: cart.id } });
-      await cart.save();
+      await actualizarTotalCarrito(cartItem.cart_id);
 
       res.redirect("/products/cart");
     } catch (error) {
@@ -105,8 +104,8 @@ let cartControllers = {
 
   decreaseItem: async (req, res) => {
     try {
-      const cartItemId = req.params.id;
-      let cartItem = await db.CartItem.findByPk(cartItemId);
+      const cartItemId = Number(req.params.id);
+      const cartItem = await db.CartItem.findByPk(cartItemId);
       if (!cartItem) return res.status(404).send("Item no encontrado.");
 
       const product = await db.Product.findByPk(cartItem.product_id);
@@ -121,9 +120,7 @@ let cartControllers = {
         await cartItem.save();
       }
 
-      const cart = await db.ShoppingCart.findByPk(cartItem.cart_id);
-      cart.total = await db.CartItem.sum("price", { where: { cart_id: cart.id } }) || 0;
-      await cart.save();
+      await actualizarTotalCarrito(cartItem.cart_id);
 
       res.redirect("/products/cart");
     } catch (error) {
@@ -134,15 +131,16 @@ let cartControllers = {
 
   removeItem: async (req, res) => {
     try {
-      const cartItemId = req.params.id;
+      const cartItemId = Number(req.params.id);
       const cartItem = await db.CartItem.findByPk(cartItemId);
       if (!cartItem) return res.status(404).send("Producto no encontrado en el carrito.");
 
-      const cart = await db.ShoppingCart.findByPk(cartItem.cart_id);
-      cart.total -= cartItem.price;
-      await cart.save();
+      const cartId = cartItem.cart_id;
 
       await cartItem.destroy();
+
+      await actualizarTotalCarrito(cartId);
+
       res.redirect("/products/cart");
     } catch (error) {
       console.error("🛒 Error en removeItem:", error.message);
@@ -166,9 +164,9 @@ let cartControllers = {
       if (!cartItems.length) return res.status(400).send("El carrito está vacío.");
 
       for (const item of cartItems) {
-        if (isNaN(item.product_id)) return res.status(400).send("ID de producto inválido.");
         const product = await db.Product.findByPk(item.product_id);
         if (!product) return res.status(404).send(`Producto con ID ${item.product_id} no encontrado.`);
+
         await db.Sale.create({
           user_id: userId,
           product_id: item.product_id,
