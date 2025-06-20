@@ -1,14 +1,15 @@
 const { validationResult } = require("express-validator");
 const db = require("../../database/models");
 
-let productCreateController = {
-  create: async function (req, res) {
+const productCreateController = {
+  create: async (req, res) => {
     try {
       const [brands, categories, colors] = await Promise.all([
         db.Brand.findAll(),
         db.Category.findAll(),
         db.Color.findAll(),
       ]);
+
       return res.render("products/productCreate", {
         brands,
         categories,
@@ -17,13 +18,13 @@ let productCreateController = {
         errors: [],
       });
     } catch (error) {
-      console.error(error);
+      console.error("🔴 Error al cargar el formulario:", error.message);
       return res.status(500).send("Error al cargar el formulario de producto.");
     }
   },
 
-  store: async function (req, res) {
-    const result = validationResult(req);
+  store: async (req, res) => {
+    const errors = validationResult(req);
 
     try {
       const [brands, categories, colors] = await Promise.all([
@@ -32,13 +33,13 @@ let productCreateController = {
         db.Color.findAll(),
       ]);
 
-      if (!result.isEmpty()) {
+      if (!errors.isEmpty()) {
         return res.status(400).render("products/productCreate", {
           brands,
           categories,
           colors,
-          errors: result.array(),
           oldData: req.body,
+          errors: errors.array(),
         });
       }
 
@@ -56,43 +57,43 @@ let productCreateController = {
       const colorsArray = Array.isArray(selectedColors)
         ? selectedColors
         : selectedColors
-        ? selectedColors.split(",")
+        ? [selectedColors]
         : [];
 
-      const existingProduct = await db.Product.findOne({ where: { name } });
-      if (existingProduct) {
+      const productExists = await db.Product.findOne({ where: { name } });
+      if (productExists) {
         return res.status(400).render("products/productCreate", {
           brands,
           categories,
           colors,
-          errors: [{ msg: "El producto ya fue registrado con ese nombre." }],
           oldData: req.body,
+          errors: [{ msg: "El producto ya fue registrado con ese nombre." }],
         });
       }
 
-      const nuevoProducto = await db.Product.create({
-        name,
-        description,
-        officialWeb,
-        size,
-        brand_id: parseInt(brand),
-        category_id: parseInt(category),
-        image: req.file ? req.file.filename : null,
+      const newProduct = await db.Product.create({
+        name: name.trim(),
+        description: description.trim(),
+        officialWeb: officialWeb?.trim() || null,
+        size: size?.trim() || null,
+        brand_id: parseInt(brand, 10),
+        category_id: parseInt(category, 10),
+        image: req.file?.filename || null,
         price: parseFloat(price) || 0.0,
       });
 
-      const colorPromises = colorsArray.map((colorId) =>
-        db.ProductColor.create({
-          product_id: nuevoProducto.id,
-          color_id: parseInt(colorId),
-        })
+      await Promise.all(
+        colorsArray.map((colorId) =>
+          db.ProductColor.create({
+            product_id: newProduct.id,
+            color_id: parseInt(colorId, 10),
+          })
+        )
       );
-
-      await Promise.all(colorPromises);
 
       return res.redirect("/products/create");
     } catch (error) {
-      console.error("Error al crear el producto:", error);
+      console.error("🔴 Error al registrar el producto:", error.message);
       return res.status(500).send("Error interno al registrar el producto.");
     }
   },
