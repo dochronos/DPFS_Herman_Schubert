@@ -1,31 +1,28 @@
-const togglePassword = document.getElementById('togglePassword');
-const passwordInput = document.getElementById('password');
-const toggleIcon = document.getElementById('toggleIcon');
-const eyeIcon = document.getElementById('eyeIcon');
+"use strict";
 
-togglePassword.addEventListener('click', () => {
+document.addEventListener("DOMContentLoaded", () => {
+  const togglePassword = document.getElementById("togglePassword");
+  const passwordInput = document.getElementById("password");
+  const eyeIcon = document.getElementById("eyeIcon");
 
-    // Alternar color del botón
-    if (togglePassword.style.backgroundColor === "") {
-        togglePassword.style.backgroundColor = "blueviolet";
-        eyeIcon.style.fill = "white";
-    } else {
-        togglePassword.style.backgroundColor = ""
-        eyeIcon.style.fill = "";
-    }
+  if (!togglePassword || !passwordInput || !eyeIcon) {
+    console.warn("Elementos para alternar visibilidad de contraseña no encontrados.");
+    return;
+  }
 
-    // Alterna el tipo del input => password (ocultar) | text (mostrar) contraseña
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        passwordInput.style.color = 'gray';
-        passwordInput.style.fontSize = '14px';
-    } else {
-        passwordInput.type = 'password';
-        passwordInput.style.color = "";
-        passwordInput.style.fontSize = "";
-    }
+  togglePassword.addEventListener("click", () => {
+    const isPasswordVisible = passwordInput.type === "text";
 
-    // Dejar presionado el botón
-    togglePassword.classList.toggle('active');
+    // Alternar tipo de input
+    passwordInput.type = isPasswordVisible ? "password" : "text";
+    passwordInput.style.color = isPasswordVisible ? "" : "gray";
+    passwordInput.style.fontSize = isPasswordVisible ? "" : "14px";
 
+    // Alternar estado visual del botón
+    togglePassword.classList.toggle("active");
+
+    // Cambiar color del botón e icono
+    togglePassword.style.backgroundColor = togglePassword.classList.contains("active") ? "blueviolet" : "";
+    eyeIcon.style.fill = togglePassword.classList.contains("active") ? "white" : "";
+  });
 });
