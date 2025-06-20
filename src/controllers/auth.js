@@ -3,14 +3,17 @@ const { findUserByEmail } = require("../service/userRepository");
 const { verifyPassword } = require("../service/password");
 
 const auth = {
+  // Renderiza el formulario de login
   login: (req, res) => {
     return res.render("users/login");
   },
 
+  // Vista para usuarios no autenticados
   requireLogin: (req, res) => {
     return res.render("users/requireLogin", { title: "Acceso Restringido" });
   },
 
+  // Cierra sesión y limpia cookies
   logout: (req, res) => {
     req.session.destroy((error) => {
       if (error) {
@@ -22,22 +25,21 @@ const auth = {
     });
   },
 
+  // Procesa login del usuario
   authenticate: async (req, res) => {
     try {
       const errors = validationResult(req);
-
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
       }
 
       const { email, password, rememberMe } = req.body;
-
       const user = await findUserByEmail(email);
 
       if (!user || !verifyPassword(password, user.password)) {
         return res.render("users/login", {
-        error: "Credenciales incorrectas.",
-        email: req.body.email,
+          error: "Credenciales incorrectas.",
+          email: req.body.email,
         });
       }
 
@@ -61,7 +63,7 @@ const auth = {
     } catch (error) {
       console.error(error);
       return res.status(500).render("error", {
-        message: "Ocurrió un problema. Intentalo más tarde.",
+        message: "Ocurrió un error inesperado. Intente nuevamente más tarde.",
       });
     }
   },
