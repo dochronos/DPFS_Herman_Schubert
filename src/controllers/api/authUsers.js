@@ -46,7 +46,7 @@ const checkEmail = async (req, res) => {
         .json({ msg: "Correo actual del usuario logueado." });
     }
 
-    return res.status(404).json({ msg: "Correo en uso.", email });
+    return res.status(409).json({ msg: "Correo en uso.", email });
   } catch (error) {
     console.error("Error en checkEmail:", error);
     return res.status(500).json({ error: "Error interno del servidor." });
