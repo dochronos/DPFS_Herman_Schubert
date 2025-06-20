@@ -8,15 +8,15 @@ const show = async (req, res) => {
       return res.status(400).send("ID de producto inválido.");
     }
 
-    const data = await findAProductById(productId);
+    const product = await findAProductById(productId);
 
-    if (!data) {
+    if (!product) {
       return res.status(404).send("Producto no encontrado.");
     }
 
-    return res.render("products/productDetail", { data });
+    return res.render("products/productDetail", { data: product });
   } catch (error) {
-    console.error("Error en show.js:", error.message);
+    console.error("🛒 Error en show.js:", error.message);
     return res.status(500).render("error", {
       message: "Ocurrió un error al mostrar el producto.",
       error,
