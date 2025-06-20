@@ -1,12 +1,15 @@
+/* Fondo decorativo en cuadrícula sutil usando conic-gradient */
 body {
-    --s: 145px; /* control the size*/
-    --c1: #fafafa;
-    --c2: #ffffff;
-    
-    --_g: #0000 90deg,var(--c1) 0;
-    background: 
-      conic-gradient(from 90deg at 2px 2px,var(--_g)),
-      conic-gradient(from 90deg at 1px 1px,var(--_g)),
-      var(--c2);
-    background-size: var(--s) var(--s), calc(var(--s)/5) calc(var(--s)/5);
-  }
+  --size: 145px;         /* Tamaño base del patrón */
+  --color-bg: #ffffff;   /* Color de fondo principal */
+  --color-grid: #fafafa; /* Color de las celdas */
+
+  --_gradient: #0000 90deg, var(--color-grid) 0;
+
+  background: 
+    conic-gradient(from 90deg at 2px 2px, var(--_gradient)),
+    conic-gradient(from 90deg at 1px 1px, var(--_gradient)),
+    var(--color-bg);
+
+  background-size: var(--size) var(--size), calc(var(--size) / 5) calc(var(--size) / 5);
+}
