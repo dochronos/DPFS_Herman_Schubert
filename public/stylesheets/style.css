@@ -1,7 +1,7 @@
 /* Importar fuentes desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Garamond&family=Montserrat:wght@300;400;600&display=swap');
 
-/* Configuraciones generales */
+/* ========== Reset general y fuentes ========== */
 * {
   margin: 0;
   padding: 0;
@@ -16,37 +16,40 @@ body {
   color: #5D4C59;
 }
 
-/* Tipografía para títulos y encabezados */
-h1, h2, h3, h4, h5, h6, .navbar-brand, .gradiente {
-  font-family: 'Garamond', serif;
-}
-
-/* Tipografía para texto general */
-p, a, li, button, input, textarea {
-  font-family: 'Montserrat', sans-serif;
-}
-
 main {
   margin-top: 10%;
   margin-bottom: 5%;
 }
 
+/* ========== Tipografía ========== */
+h1, h2, h3, h4, h5, h6,
+.navbar-brand,
+.gradiente {
+  font-family: 'Garamond', serif;
+}
+
+p, a, li, button, input, textarea {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* ========== Enlaces ========== */
 a {
   text-decoration: none;
   color: #5D4C59;
+  transition: ease 0.33s;
 }
 
 a:hover {
   color: #D4A373;
 }
 
-a,
+/* ========== Transiciones globales ========== */
 svg,
 button {
   transition: ease 0.33s;
 }
 
-/* header styles */
+/* ========== Header ========== */
 .imagen-perfil {
   width: 24px;
   height: 24px;
@@ -63,13 +66,14 @@ button {
 
 .nav-link svg {
   fill: #5D4C59;
+  transition: fill 0.3s;
 }
 
 .nav-link svg:hover {
   fill: #D4A373;
 }
 
-/* footer styles */
+/* ========== Footer ========== */
 footer {
   background-color: #F9F6F1;
   padding: 2rem;
@@ -93,16 +97,16 @@ footer svg:hover {
   fill: #A8B2A1;
 }
 
-/* Estilos para Perfil */
+/* ========== Perfil de usuario ========== */
 .profile-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/* Estilos para tarjetas productos */
+/* ========== Tarjetas de productos ========== */
 .product-card {
-  transition: 0.25s ease;
+  transition: transform 0.25s ease;
   box-shadow: 0 3px 3px rgba(93, 76, 89, 0.2);
   background-color: #F9F6F1;
   border: 1px solid #C7BAB0;
@@ -113,7 +117,7 @@ footer svg:hover {
   box-shadow: 0 8px 8px rgba(93, 76, 89, 0.2);
 }
 
-/* LOGOTIPO */
+/* ========== Logotipo y estilo personalizado ========== */
 .navbar-brand {
   font-weight: 700;
   font-size: 20px;
