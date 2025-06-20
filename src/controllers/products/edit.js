@@ -2,9 +2,13 @@ const { validationResult } = require("express-validator");
 const db = require("../../database/models");
 
 let productEditController = {
+  // Mostrar formulario de edición
   edit: async function (req, res) {
     try {
-      const productId = req.params.id;
+      const productId = Number(req.params.id);
+      if (!Number.isInteger(productId) || productId <= 0) {
+        return res.status(400).send("ID de producto inválido.");
+      }
 
       const [product, brands, categories, colors] = await Promise.all([
         db.Product.findByPk(productId, {
@@ -20,7 +24,7 @@ let productEditController = {
       ]);
 
       if (!product) {
-        return res.status(404).send("Producto no encontrado");
+        return res.status(404).send("Producto no encontrado.");
       }
 
       return res.render("products/productEdit", {
@@ -32,13 +36,14 @@ let productEditController = {
         oldData: {},
       });
     } catch (error) {
-      console.error("Error al cargar la edición del producto:", error);
+      console.error("⚠️ Error al cargar la edición del producto:", error.message);
       return res.status(500).send("Error interno del servidor.");
     }
   },
 
+  // Actualizar producto
   update: async function (req, res) {
-    const productId = req.params.id;
+    const productId = Number(req.params.id);
     const result = validationResult(req);
 
     const [brands, categories, colors] = await Promise.all([
@@ -75,29 +80,29 @@ let productEditController = {
       ? selectedColors.split(",")
       : [];
 
-    const actualProducto = {
+    const updatedProductData = {
       name,
       description,
-      category_id: parseInt(category),
-      brand_id: parseInt(brand),
-      size,
       price: parseFloat(price) || 0.0,
+      category_id: Number(category),
+      brand_id: Number(brand),
+      size,
       officialWeb,
     };
 
     if (req.file) {
-      actualProducto.image = req.file.filename;
+      updatedProductData.image = req.file.filename;
     }
 
     try {
-      const existingProduct = await db.Product.findOne({
+      const duplicate = await db.Product.findOne({
         where: {
           name: name,
           id: { [db.Sequelize.Op.ne]: productId },
         },
       });
 
-      if (existingProduct) {
+      if (duplicate) {
         return res.status(400).render("products/productEdit", {
           product: { ...req.body, id: productId },
           brands,
@@ -108,30 +113,28 @@ let productEditController = {
         });
       }
 
-      const [updatedRows] = await db.Product.update(actualProducto, {
+      const [affectedRows] = await db.Product.update(updatedProductData, {
         where: { id: productId },
       });
 
-      if (updatedRows === 0) {
-        return res
-          .status(404)
-          .send("No se actualizó el producto. Verificá el ID.");
+      if (affectedRows === 0) {
+        return res.status(404).send("No se actualizó el producto. Verificá el ID.");
       }
 
       await db.ProductColor.destroy({ where: { product_id: productId } });
 
-      const colorPromises = colorsArray.map((colorId) =>
+      const colorInsertions = colorsArray.map((colorId) =>
         db.ProductColor.create({
           product_id: productId,
-          color_id: parseInt(colorId),
+          color_id: Number(colorId),
         })
       );
 
-      await Promise.all(colorPromises);
+      await Promise.all(colorInsertions);
 
       return res.redirect(`/products/${productId}`);
     } catch (error) {
-      console.error("Error al actualizar producto:", error.message);
+      console.error("❌ Error al actualizar producto:", error.message);
       return res.status(500).send("Error al actualizar el producto.");
     }
   },
