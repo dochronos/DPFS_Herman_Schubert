@@ -25,9 +25,9 @@ const createController = {
     const { firstName, lastName, email, password, category } = req.body;
 
     try {
-      const user = await findUserByEmail(email);
+      const existingUser = await findUserByEmail(email.trim());
 
-      if (user) {
+      if (existingUser) {
         return res.status(400).render("users/register", {
           title: "Registrarse",
           errors: [{ msg: "El correo ya fue registrado.", param: "email" }],
@@ -35,22 +35,22 @@ const createController = {
         });
       }
 
-      const hashedPassword = hashPassword(password);
+      const hashedPassword = hashPassword(password.trim());
 
-      const nuevoUsuario = {
-        firstName,
-        lastName,
-        email,
+      const newUser = {
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
+        email: email.trim(),
         password: hashedPassword,
-        category,
+        category: category || "user",
         profileImage: req.file ? req.file.filename : null,
       };
 
-      await createUser(nuevoUsuario);
+      await createUser(newUser);
 
       return res.redirect("/users/login");
     } catch (error) {
-      console.error("Error al crear usuario:", error);
+      console.error("🧑‍💻 Error al crear usuario:", error);
       return res.status(500).render("error", {
         message: "Ocurrió un error al registrar el usuario.",
         error,
