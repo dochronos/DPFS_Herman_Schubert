@@ -19,29 +19,33 @@
         <div class="mb-3">
           <label for="firstName" class="form-label">Nombre</label>
           <input type="text" id="firstName" name="firstName" class="form-control"
-                 autocomplete="off" autofocus
-                 value="<%= oldData?.firstName || user?.firstName || '' %>">
-          <div id="firstNameError" class="text-danger"></div>
+                 value="<%= oldData?.firstName || user?.firstName || '' %>"
+                 autocomplete="off" <%= isRegister ? 'autofocus' : '' %>
+                 aria-describedby="firstNameError">
+          <div id="firstNameError" class="form-text text-danger"></div>
         </div>
 
         <div class="mb-3">
           <label for="lastName" class="form-label">Apellido</label>
           <input type="text" id="lastName" name="lastName" class="form-control"
-                 autocomplete="off" value="<%= oldData?.lastName || user?.lastName || '' %>">
-          <div id="lastNameError" class="text-danger"></div>
+                 value="<%= oldData?.lastName || user?.lastName || '' %>"
+                 autocomplete="off" aria-describedby="lastNameError">
+          <div id="lastNameError" class="form-text text-danger"></div>
         </div>
 
         <div class="mb-3">
           <label for="email" class="form-label">Correo electrónico</label>
-          <input type="email" class="form-control" id="email" name="email" autocomplete="off"
-                 value="<%= oldData?.email || user?.email || '' %>">
-          <div id="emailError" class="text-danger"></div>
+          <input type="email" id="email" name="email" class="form-control"
+                 value="<%= oldData?.email || user?.email || '' %>"
+                 autocomplete="off" aria-describedby="emailError">
+          <div id="emailError" class="form-text text-danger"></div>
         </div>
 
         <div class="mb-3 position-relative">
           <label for="password" class="form-label">Contraseña</label>
           <div class="input-group">
-            <input type="password" id="password" name="password" class="form-control">
+            <input type="password" id="password" name="<%= isRegister ? 'password' : 'passwordEdit' %>" class="form-control"
+                   aria-describedby="passwordError">
             <span class="input-group-text" id="togglePassword" style="cursor: pointer;">
               <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" height="24px"
                    viewBox="0 -960 960 960" width="24px" fill="#000000">
@@ -49,7 +53,7 @@
               </svg>
             </span>
           </div>
-          <div id="passwordError" class="text-danger"></div>
+          <div id="passwordError" class="form-text text-danger"></div>
         </div>
 
         <% if (isRegister) { %>
@@ -64,8 +68,9 @@
 
         <div class="mb-3">
           <label for="profileImage" class="form-label">Imagen de Perfil</label>
-          <input type="file" id="profileImage" name="profileImage" class="form-control" accept="image/*">
-          <div id="profileImageError" class="text-danger"></div>
+          <input type="file" id="profileImage" name="profileImage" class="form-control"
+                 accept="image/*" aria-describedby="profileImageError">
+          <div id="profileImageError" class="form-text text-danger"></div>
         </div>
 
         <button type="submit" class="btn btn-primary w-100">
@@ -75,7 +80,6 @@
         <% if (isRegister) { %>
           <a class="login mt-3 d-block text-center" href="/users/login">¿Ya tenés una cuenta? Iniciá sesión</a>
         <% } %>
-
       </form>
     </div>
   </div>
