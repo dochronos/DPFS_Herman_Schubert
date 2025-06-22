@@ -4,33 +4,33 @@
 <%- include('../partials/head.ejs', { title: 'Perfil de Usuario', stylesheets: [] }) %>
 
 <body>
-
   <%- include('../partials/header.ejs') %>
 
   <main class="my-5">
     <div class="container">
-      <div class="card mx-auto bg-light shadow border-0 rounded-4" style="max-width: 640px;">
+      <section class="card mx-auto bg-light shadow border-0 rounded-4" style="max-width: 640px;">
         <div class="row g-0">
+          
           <!-- Imagen de perfil -->
-          <div class="col-md-4 d-flex align-items-center justify-content-center bg-white rounded-start p-3 border-end">
+          <figure class="col-md-4 d-flex align-items-center justify-content-center bg-white rounded-start p-3 border-end">
             <img
               src="/images/users/<%= user.profileImage || 'user-undefined.png' %>"
+              alt="Foto de perfil de <%= user.firstName %> <%= user.lastName %>"
               class="img-fluid rounded-circle border shadow"
-              alt="Imagen de perfil de <%= user.firstName %>"
               style="width: 100px; height: 100px; object-fit: cover;">
-          </div>
+          </figure>
 
-          <!-- Información del usuario -->
+          <!-- Datos del usuario -->
           <div class="col-md-8 p-4">
             <h3 class="fw-bold mb-3"><%= user.firstName %> <%= user.lastName %></h3>
 
             <p class="mb-2">
-              <span class="fw-bold">Correo electrónico:</span><br>
+              <strong>Correo electrónico:</strong><br>
               <span class="text-muted"><%= user.email %></span>
             </p>
 
             <p class="mb-4">
-              <span class="fw-bold">Categoría:</span><br>
+              <strong>Categoría:</strong><br>
               <span class="text-muted"><%= user.category === 'admin' ? 'Administrador' : 'Usuario' %></span>
             </p>
 
@@ -38,17 +38,17 @@
               <a href="/users/edit" class="btn btn-primary">Editar usuario</a>
               <a href="/users/logout" class="btn btn-outline-secondary">Cerrar sesión</a>
               <form action="/users/<%= user.id %>?_method=DELETE" method="POST" class="d-inline"
-                onsubmit="return confirm('¿Estás seguro de que querés eliminar este usuario?');">
+                    onsubmit="return confirm('¿Estás seguro de que querés eliminar este usuario?');">
                 <button type="submit" class="btn btn-danger">Eliminar usuario</button>
               </form>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   </main>
 
   <%- include('../partials/footer.ejs') %>
-
 </body>
+
 </html>

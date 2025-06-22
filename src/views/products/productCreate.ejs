@@ -2,32 +2,33 @@
 <html lang="es">
 
 <%- include('../partials/head.ejs', {
-    title: 'Registrar producto - QuantumBloom',
-    stylesheets: []
+  title: 'Registrar producto - QuantumBloom',
+  stylesheets: []
 }) %>
 
 <body>
 
-    <%- include('../partials/header.ejs') %>
+  <%- include('../partials/header.ejs') %>
 
-    <main class="my-5">
-        <%- include('../partials/productForm.ejs', {
-            formClass: 'crearProducto',
-            formAction: '/products/',
-            formMethod: 'POST',
-            formTitle: 'Registrar nuevo producto',
-            buttonText: 'Guardar producto',
-            brands: brands,
-            categories: categories,
-            colors: colors,
-            product: null
-        }) %>
-    </main>
+  <main class="my-5">
+    <%- include('../partials/productForm.ejs', {
+      formClass: 'crearProducto',
+      formAction: '/products/',
+      formMethod: 'POST',
+      formTitle: 'Registrar nuevo producto',
+      buttonText: 'Guardar producto',
+      brands,
+      categories,
+      colors,
+      product: null
+    }) %>
+  </main>
 
-    <%- include('../partials/footer.ejs') %>
+  <%- include('../partials/footer.ejs') %>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/validatorjs/2.0.0/validator.min.js"></script>
-    <script src="/javascripts/productValidation.js"></script>
+  <!-- Validaciones en cliente -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/validatorjs/2.0.0/validator.min.js" integrity="sha512-EIu8OQq3MUnH79MGtwDsfzY7TWGHXLOyxZZh5MTKNxFDfUHLqAZewtI4VCk74+DFOHR2ZDC/qMH6gPAQboi1yg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/javascripts/productValidation.js" defer></script>
 
 </body>
 </html>

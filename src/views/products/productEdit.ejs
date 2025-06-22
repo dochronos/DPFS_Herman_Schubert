@@ -2,32 +2,33 @@
 <html lang="es">
 
 <%- include('../partials/head.ejs', {
-    title: 'Editar Producto',
-    stylesheets: []
+  title: 'Editar Producto',
+  stylesheets: []
 }) %>
 
 <body>
 
-    <%- include('../partials/header.ejs') %>
+  <%- include('../partials/header.ejs') %>
 
-    <main>
-        <%- include('../partials/productForm.ejs', {
-            formClass: 'editarProducto',
-            formAction: '/products/' + product.id + '?_method=PUT',
-            formMethod: 'PUT',
-            formTitle: 'Editar Producto',
-            buttonText: 'Guardar cambios',
-            brands: brands,
-            categories: categories,
-            colors: colors,
-            product: product
-        }) %>
-    </main>
+  <main class="my-5">
+    <%- include('../partials/productForm.ejs', {
+      formClass: 'editarProducto',
+      formAction: '/products/' + product.id + '?_method=PUT',
+      formMethod: 'PUT',
+      formTitle: 'Editar Producto',
+      buttonText: 'Guardar cambios',
+      brands,
+      categories,
+      colors,
+      product
+    }) %>
+  </main>
 
-    <%- include('../partials/footer.ejs') %>
+  <%- include('../partials/footer.ejs') %>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/validatorjs/2.0.0/validator.min.js"></script>
-    <script src="/javascripts/productValidation.js"></script>
+  <!-- Validaciones del formulario -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/validatorjs/2.0.0/validator.min.js" integrity="sha512-EIu8OQq3MUnH79MGtwDsfzY7TWGHXLOyxZZh5MTKNxFDfUHLqAZewtI4VCk74+DFOHR2ZDC/qMH6gPAQboi1yg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/javascripts/productValidation.js" defer></script>
 
 </body>
 </html>

@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="es">
-<%- include('../partials/head.ejs', { title: 'Acceso Requerido', stylesheets: [] }) %>
+
+<%- include('../partials/head.ejs', { title: 'Acceso Requerido · QuantumBloom', stylesheets: [] }) %>
 
 <body>
   <%- include('../partials/header.ejs') %>
 
   <main class="container text-center my-5">
     <div class="alert alert-warning p-5 shadow-sm rounded-4">
-      <h1 class="mb-4 text-dark">
-        <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#f0ad4e">
+      <h1 class="mb-4 text-dark" style="font-family: 'Montserrat', sans-serif;">
+        <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#f0ad4e" class="me-2">
           <path d="M480-40q-92 0-172.5-35.5T167-167q-62-62-97.5-142.5T34-480q0-92 35.5-172.5T167-795q62-62 142.5-97.5T480-928q92 0 172.5 35.5T793-793q62 62 97.5 142.5T926-480q0 92-35.5 172.5T793-167q-62 62-142.5 97.5T480-40Zm-40-280h80v-80h-80v80Zm0-160h80v-240h-80v240Z"/>
         </svg>
         Inicio de sesión requerido
       </h1>
-      <p class="mb-4 text-secondary">
+
+      <p class="mb-4 text-secondary" style="font-family: 'Garamond', serif;">
         Para acceder al carrito o agregar productos, primero necesitás iniciar sesión o crear una cuenta.
       </p>
-      <a href="/users/login" class="btn btn-primary btn-lg px-4 py-2">
+
+      <a href="/users/login" class="btn btn-primary btn-lg px-4 py-2 fw-semibold">
         Iniciar Sesión
       </a>
     </div>
