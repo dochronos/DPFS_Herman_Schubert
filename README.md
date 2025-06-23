@@ -1,74 +1,129 @@
-# Quantum Bloom Space 🌸✨
-Proyecto Final - Digital House | Desarrollo Web Full Stack
+# 🌸 Quantum Bloom Space
 
-## 📁 DPFS_Herman_Schubert
+Proyecto Final – Digital House | Desarrollo Web Full Stack
 
-Este repositorio contiene el proyecto final del curso de Desarrollo Web Full Stack, compuesto por:
-
-- ✨ Un **backend en Node.js + Express + Sequelize + MySQL** que gestiona productos, usuarios, autenticación, ventas y carrito.
-- 📊 Un **dashboard administrativo** construido con **React + Vite** para visualizar estadísticas de ventas, usuarios y productos.
-- 🎨 Estética inspirada en el concepto de **Quantum Bloom Space**, con un enfoque relajado y minimalista.
+Quantum Bloom Space es una tienda online inspirada en el minimalismo y la calma. Ofrece una experiencia de compra estética, funcional y moderna, combinando un backend robusto con vistas tradicionales y un dashboard administrativo realizado en React.
 
 ---
 
-## 🧰 Tecnologías utilizadas
+## 📦 Repositorio
 
-### Backend:
-- Node.js
-- Express.js
-- EJS (para vistas del frontend tradicional)
-- Sequelize (ORM)
-- MySQL
-- Swagger (documentación de API)
-- Multer (subida de imágenes)
-- bcryptjs (hash de contraseñas)
-- express-validator
+Este repositorio contiene:
 
-### Frontend (Dashboard):
-- React
-- Vite
+- 🛒 Un **backend** desarrollado en **Node.js + Express + Sequelize + MySQL**, que gestiona usuarios, productos, autenticación, carrito y sesiones.
+- 📊 Un **dashboard administrativo** construido con **React + Vite**, para visualizar analíticas de productos, usuarios y ventas.
+- 🖼️ Una interfaz tradicional basada en **EJS + Bootstrap**, con enfoque limpio y adaptativo.
+- 🔐 Validaciones de formularios, carga de imágenes y documentación con **Swagger**.
+
+---
+
+## 🛠️ Tecnologías utilizadas
+
+### 🔧 Backend
+- Node.js · Express.js · Sequelize · MySQL
+- EJS · bcryptjs · multer · express-validator
+- express-session · cookie-parser · method-override
+- Swagger (documentación API)
+
+### 📈 Dashboard (Frontend)
+- React · Vite
 - React Router DOM
-- MUI X Charts (gráfico de torta)
+- MUI X Charts
 - Fetch API
 
 ---
 
-## 🚀 Instrucciones para ejecutar el proyecto
+## 🚀 ¿Cómo correr el proyecto?
 
-### 📦 1. Clonar el repositorio
+### 1. Clonar el repositorio
 
 ```bash
 git clone https://github.com/TU_USUARIO/DPFS_Herman_Schubert.git
 cd DPFS_Herman_Schubert
 
-⚙️ 2. Backend - Instalación y ejecución
-bash
-Copiar
-Editar
+### 2. Configurar el Backend
+
 cd backend
 npm install
-npm run start
-El servidor correrá en: http://localhost:3000
 
-Documentación de API: http://localhost:3000/api-docs
+Crear base de datos MySQL
+Asegurate de tener un servidor MySQL corriendo y configurado en src/database/config/config.js.
 
-⚠️ Asegurate de tener una base de datos MySQL creada y configurada en src/database/config/config.js.
+Sincronizar modelos y cargar seeders (opcional)
 
-🧪 Seed de datos (opcional)
-bash
-Copiar
-Editar
-npx sequelize-cli db:seed:all
-Esto cargará categorías, productos, usuarios, carritos, colores y relaciones de ejemplo.
+npm run db:sync        # Crea tablas automáticamente
+npm run db:seed        # Carga datos de ejemplo (categorías, usuarios, productos)
 
-📊 3. Frontend - Dashboard
-bash
-Copiar
-Editar
+Iniciar servidor backend
+
+npm run dev
+Acceso: http://localhost:3000
+Documentación API: http://localhost:3000/api-docs
+
+3. Iniciar el Dashboard (frontend administrativo)
+
 cd dashboard
 npm install
 npm run dev
-El dashboard estará disponible en: http://localhost:5173
+Acceso: http://localhost:5173
 
-📚 Licencia
-Este proyecto fue desarrollado con fines educativos como parte del curso de Desarrollo Web Full Stack en Digital House. Todos los recursos utilizados fueron debidamente referenciados o generados para uso libre no comercial.
+🗂️ Estructura de carpetas clave
+
+├── backend/
+│   ├── src/
+│   │   ├── controllers/
+│   │   ├── database/
+│   │   ├── middlewares/
+│   │   ├── routes/
+│   │   ├── services/
+│   │   ├── validators/
+│   │   └── views/
+│   ├── public/
+│   └── swaggerConfig.js
+│
+├── dashboard/
+│   ├── src/
+│   └── vite.config.js
+│
+├── docs/
+│   ├── DER.html          # Diagrama entidad-relación
+│   ├── wireframe.pdf     # Wireframe general del sitio
+│   └── retro.md          # Reflexión personal del proyecto
+📄 Documentación técnica
+🔎 Swagger UI: http://localhost:3000/api-docs
+
+📌 Wireframe: docs/wireframe.pdf
+
+📌 Modelo Entidad-Relación (DER): docs/DER.html
+
+🧠 Reflexión personal: docs/retro.md
+
+✅ Funcionalidades principales
+Registro, login y edición de perfil de usuarios.
+
+Alta, baja, edición y detalle de productos.
+
+Carrito de compras persistente por sesión.
+
+Gestión de productos y visualización de estadísticas desde dashboard.
+
+Validaciones tanto en frontend como backend.
+
+CRUD completo de usuarios desde backend.
+
+Carga de imágenes (productos / usuarios).
+
+Middleware para recordar sesión y proteger rutas.
+
+Documentación Swagger de endpoints RESTful.
+
+🧠 Reflexión
+Este proyecto fue desarrollado con fines educativos como parte del curso Desarrollo Web Full Stack de Digital House. Refleja un proceso de aprendizaje profundo sobre arquitectura backend, integración frontend y diseño web centrado en el usuario.
+
+👨‍💻 Autor
+Herman Schubert – Desarrollador Full Stack
+
+📄 Licencia
+MIT – Uso libre educativo y no comercial.
+Los assets e imágenes utilizados en el sitio fueron generados, adaptados o extraídos de fuentes libres.
+

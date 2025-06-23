@@ -1,11 +1,12 @@
 {
   "name": "quantumbloom-space",
   "version": "1.0.0",
-  "description": "Tienda online de Quantum Bloom Space con Express, Sequelize y Swagger.",
+  "description": "Aplicación web de e-commerce para QuantumBloom Space. Permite registrar usuarios, administrar productos, visualizar catálogos y realizar compras.",
   "main": "app.js",
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
+    "docs": "nodemon ./app.js",
     "db:sync": "node src/database/config/syncDatabase.js",
     "db:seed": "npx sequelize-cli db:seed:all",
     "db:reset": "npx sequelize-cli db:seed:undo:all && npx sequelize-cli db:seed:all"
