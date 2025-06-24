@@ -37,7 +37,6 @@ Este repositorio contiene:
 
 ### 1. Clonar el repositorio
 
-```bash
 git clone https://github.com/TU_USUARIO/DPFS_Herman_Schubert.git
 cd DPFS_Herman_Schubert
 
@@ -89,6 +88,7 @@ Acceso: http://localhost:5173
 │   ├── DER.html          # Diagrama entidad-relación
 │   ├── wireframe.pdf     # Wireframe general del sitio
 │   └── retro.md          # Reflexión personal del proyecto
+
 📄 Documentación técnica
 🔎 Swagger UI: http://localhost:3000/api-docs
 
@@ -117,6 +117,27 @@ Middleware para recordar sesión y proteger rutas.
 
 Documentación Swagger de endpoints RESTful.
 
+## 🌐 Sitios de referencia e inspiración
+
+Durante el diseño y desarrollo de Quantum Bloom Space, se tomaron como referencia los siguientes sitios por su estética, experiencia de usuario o propuesta visual:
+
+1. **https://www.typology.com/**  
+   ↳ Inspiración para una estética minimalista y uso de tonos suaves. Su enfoque en el espacio blanco y la tipografía clara sirvió como guía para transmitir calma y sofisticación.
+
+2. **https://www.muji.com/**  
+   ↳ Referencia clave para estructura simple, navegación intuitiva y filosofía centrada en lo esencial. Su diseño fue modelo para mantener una experiencia limpia y ordenada.
+
+3. **https://www.papersource.com/**  
+   ↳ Tomamos inspiración de este sitio por su enfoque en papelería y regalos. Nos ayudó a entender cómo presentar planners, accesorios y objetos para el bienestar diario.
+
+4. **https://www.oysho.com/**  
+   ↳ Aportó ideas sobre paleta cromática suave y armoniosa. También fue útil para observar cómo incorporar imágenes de producto emocionalmente atractivas.
+
+5. **https://notion.so/**  
+   ↳ Aunque no es una tienda, sirvió como inspiración por su enfoque zen, estilo visual relajado y consistencia tipográfica. Fue clave para definir la identidad visual del dashboard.
+
+> Cada uno de estos sitios contribuyó a construir una experiencia estética coherente con los valores de Quantum Bloom: orden, calma y belleza funcional.
+
 🧠 Reflexión
 Este proyecto fue desarrollado con fines educativos como parte del curso Desarrollo Web Full Stack de Digital House. Refleja un proceso de aprendizaje profundo sobre arquitectura backend, integración frontend y diseño web centrado en el usuario.
 
@@ -126,4 +147,3 @@ Herman Schubert – Desarrollador Full Stack
 📄 Licencia
 MIT – Uso libre educativo y no comercial.
 Los assets e imágenes utilizados en el sitio fueron generados, adaptados o extraídos de fuentes libres.
-
