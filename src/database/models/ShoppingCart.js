@@ -22,8 +22,8 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      tableName: "ShoppingCart",
-      timestamps: true, // createdAt, updatedAt
+      tableName: "ShoppingCarts", // 🟢 CAMBIO: plural para evitar conflictos con FK
+      timestamps: true,
     }
   );
 
@@ -31,13 +31,13 @@ module.exports = (sequelize, DataTypes) => {
     ShoppingCart.belongsTo(models.User, {
       foreignKey: "user_id",
       as: "user",
-      onDelete: "CASCADE", // Opcional pero recomendado
+      onDelete: "CASCADE",
     });
 
     ShoppingCart.hasMany(models.CartItem, {
       foreignKey: "cart_id",
       as: "items",
-      onDelete: "CASCADE", // Limpia items si se borra el carrito
+      onDelete: "CASCADE",
     });
   };
 

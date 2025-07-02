@@ -1,13 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-const { findAllProducts } = require("../../service/productRepository");
+const { getAllProducts } = require("../../service/productRepository");
 
 router.get("/", async (req, res) => {
   try {
-    const products = await findAllProducts();
+    const products = await getAllProducts();
 
-    return res.render("index", { products });
+    // 🔁 Cambiamos la vista y el nombre de la variable
+    return res.render("products/productList", { data: products });
   } catch (error) {
     console.error("Error al obtener productos:", error);
 

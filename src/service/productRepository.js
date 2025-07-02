@@ -4,15 +4,19 @@ const db = require("../database/models");
 const includeModels = [
   {
     model: db.Brand,
+    as: "Brand", // Relación belongsTo
     attributes: ["name"],
   },
   {
     model: db.Category,
+    as: "Category", // Relación belongsTo
     attributes: ["name"],
   },
   {
     model: db.Color,
+    as: "Colors", // Relación belongsToMany (nota el plural)
     attributes: ["name"],
+    through: { attributes: [] }, // Excluye los atributos de la tabla intermedia
   },
 ];
 

@@ -1,4 +1,4 @@
-const { findAllProducts } = require("../../service/productRepository");
+const { getAllProducts } = require("../../service/productRepository");
 
 const index = async (req, res) => {
   try {

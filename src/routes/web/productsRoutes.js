@@ -10,14 +10,26 @@ const {
 
 const { create, store } = require("../../controllers/products/create");
 const { edit, update } = require("../../controllers/products/edit");
-const index = require("../../controllers/products");
+const { getAllProducts } = require("../../service/productRepository");
 const search = require("../../controllers/products/search");
 const deleteProduct = require("../../controllers/products/delete");
 const show = require("../../controllers/products/show");
 const cartControllers = require("../../controllers/products/cart");
 
 // 📦 Productos
-router.get("/", index);
+router.get("/", async (req, res) => {
+  try {
+    const products = await getAllProducts();
+    res.render("products/productList", { data: products }); // ✅ Cambio clave: { data: products }
+  } catch (error) {
+    console.error("🛒 Error al obtener los productos:", error);
+    res.status(500).render("error", {
+      message: "Error al obtener los productos.",
+      error,
+    });
+  }
+});
+
 router.get("/search", search);
 router.get("/create", authorize("admin"), create);
 router.get("/:id/edit", authorize("admin"), edit);

@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const { Sequelize } = require("sequelize");
 const env = process.env.NODE_ENV || "development";
 const config = require("../config/config")[env];
@@ -11,6 +13,7 @@ const createDatabaseIfNotExists = async () => {
   try {
     const sequelize = new Sequelize("", config.username, config.password, {
       host: config.host,
+      port: config.port, // ✅ Usamos el puerto desde config.js
       dialect: config.dialect,
       logging: false,
     });
