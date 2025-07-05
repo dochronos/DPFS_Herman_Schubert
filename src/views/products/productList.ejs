@@ -20,10 +20,11 @@
                  class="text-decoration-none text-dark"
                  aria-label="Ver detalles del producto <%= product.name %>">
 
-                <img src="/images/quantumbloom/<%= product.image %>"
-                     class="card-img-top img-fluid rounded-top"
-                     alt="<%= product.name || 'Imagen de producto' %>"
-                     style="height: 200px; object-fit: cover;">
+                <div class="ratio ratio-4x3">
+                  <img src="/images/quantumbloom/<%= product.image %>"
+                       class="img-fluid object-fit-contain rounded-top"
+                       alt="<%= product.name || 'Imagen de producto' %>">
+                </div>
 
                 <div class="card-body">
                   <h5 class="card-title fw-bold text-truncate"

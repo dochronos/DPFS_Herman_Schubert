@@ -15,6 +15,12 @@ const {
  */
 
 /**
+ * Ruta pública - sin autorización
+ */
+router.get("/public", showAllProducts);
+router.get("/public/:id", showAProduct);
+
+/**
  * @swagger
  * /api/products:
  *   get:

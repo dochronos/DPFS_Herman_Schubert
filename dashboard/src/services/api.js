@@ -1,45 +1,43 @@
-// 📍 Dirección base del backend (modificable según entorno)
-const BASE_URL = "http://localhost:3000";
+import axios from "axios";
 
-// 🌐 Función reutilizable para peticiones con sesión
-const fetchWithCredentials = async (url, options = {}) => {
-  const response = await fetch(url, {
-    ...options,
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      ...options.headers,
-    },
-  });
+// 🌍 Configuración base
+const BASE_URL = "http://localhost:3000/api";
 
-  if (!response.ok) {
-    switch (response.status) {
-      case 401:
-        throw new Error("No autenticado. Por favor, inicie sesión.");
-      case 403:
-        throw new Error("Acceso denegado. Permisos insuficientes.");
-      default:
-        throw new Error(`Error ${response.status}: ${response.statusText}`);
-    }
-  }
+// ✅ Instancia pública (no necesita credenciales)
+const publicAPI = axios.create({
+  baseURL: BASE_URL,
+});
 
-  return response.json();
-};
+// 🔒 Instancia autenticada (cookies, headers, etc.)
+const privateAPI = axios.create({
+  baseURL: BASE_URL,
+  withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
-// 🧑‍💼 Servicios: API de Usuarios
+// 📤 Exportación unificada
+export default publicAPI;
+
+// 🧑‍💼 Servicios privados: usuarios (requiere sesión)
 export const fetchUsers = async () => {
-  return fetchWithCredentials(`${BASE_URL}/api/users`);
+  const res = await privateAPI.get("/users");
+  return res.data;
 };
 
 export const fetchUserDetail = async (id) => {
-  return fetchWithCredentials(`${BASE_URL}/api/users/${id}`);
+  const res = await privateAPI.get(`/users/${id}`);
+  return res.data;
 };
 
-// 🛍️ Servicios: API de Productos
+// 🛍️ Servicios privados: productos (requiere sesión)
 export const fetchProducts = async () => {
-  return fetchWithCredentials(`${BASE_URL}/api/products`);
+  const res = await privateAPI.get("/products");
+  return res.data;
 };
 
 export const fetchProductDetail = async (id) => {
-  return fetchWithCredentials(`${BASE_URL}/api/products/${id}`);
+  const res = await privateAPI.get(`/products/${id}`);
+  return res.data;
 };

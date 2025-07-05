@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Card from "../components/Card";
 import Table from "../components/Table";
 import CategoryPieChart from "../components/CategoryPieChart";
+import ProductsList from "../components/ProductsList";
 import "../styles/dashboard.css";
 import { fetchUsers, fetchProducts } from "../services/api";
 
@@ -85,18 +86,8 @@ const Dashboard = () => {
         <CategoryPieChart categories={categories} />
       </div>
 
-      {/* Listado general de productos */}
-      <div className="list-container">
-        <h2>Productos Registrados</h2>
-        <Table
-          headers={["ID", "Nombre", "Descripción"]}
-          data={products.map((p) => ({
-            ID: p.id,
-            Nombre: p.name,
-            Descripción: p.description,
-          }))}
-        />
-      </div>
+      {/* Listado visual de productos con Cards */}
+      <ProductsList />
 
       {/* Últimas ventas */}
       <div className="list-container">

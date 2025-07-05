@@ -13,6 +13,10 @@ const { checkUser, checkEmail } = require("../../controllers/api/authUsers");
  *   description: API para la gestión de usuarios en QuantumBloom
  */
 
+// Rutas públicas de solo lectura (opcional)
+router.get("/public", showAllUsers);
+router.get("/public/:id", showUser);
+
 /**
  * @swagger
  * /api/users:
