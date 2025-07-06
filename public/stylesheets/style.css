@@ -16,9 +16,9 @@ body {
   color: #5D4C59;
 }
 
-main {
-  margin-top: 10%;
-  margin-bottom: 5%;
+main.catalogo {
+  padding-top: 120px !important;
+  padding-bottom: 5%;
 }
 
 /* ========== Tipografía ========== */

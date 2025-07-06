@@ -1,4 +1,4 @@
-const { findAProductById } = require("../../service/productRepository");
+const { getProductById } = require("../../service/productRepository");
 
 const show = async (req, res) => {
   try {
@@ -8,7 +8,7 @@ const show = async (req, res) => {
       return res.status(400).send("ID de producto inválido.");
     }
 
-    const product = await findAProductById(productId);
+    const product = await getProductById(productId);
 
     if (!product) {
       return res.status(404).send("Producto no encontrado.");
