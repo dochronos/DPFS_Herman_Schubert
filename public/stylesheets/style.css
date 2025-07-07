@@ -16,9 +16,56 @@ body {
   color: #5D4C59;
 }
 
-main.catalogo {
+/* ========== Ajuste global para evitar corte con el header fijo ========== */
+main,
+.products-section {
   padding-top: 120px !important;
   padding-bottom: 5%;
+}
+
+main.catalogo {
+  padding-top: 120px !important;
+}
+
+/* 🌸 HERO DE LANDING PAGE */
+.hero-landing {
+  background-color: #F6F4EF;
+  padding-top: 100px !important;
+  padding-bottom: 20px;
+  text-align: center;
+}
+
+.hero-logo {
+  max-height: 200px;
+  margin-bottom: 1rem;
+}
+
+.hero-title {
+  font-family: 'Garamond', serif;
+  font-size: 2.6rem;
+  color: #5D4C59;
+  margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+  color: #5D4C59;
+}
+
+.hero-landing .btn {
+  margin-top: 1.2rem;
+  margin-bottom: 0.1rem;
+}
+
+/* 🌿 Imagen de ambientación */
+.ambient-img {
+  max-height: 320px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-top: 2rem;
 }
 
 /* ========== Tipografía ========== */

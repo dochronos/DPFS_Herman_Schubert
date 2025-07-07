@@ -7,8 +7,7 @@ router.get("/", async (req, res) => {
   try {
     const products = await getAllProducts();
 
-    // 🔁 Cambiamos la vista y el nombre de la variable
-    return res.render("products/productList", { data: products });
+    return res.render("index", { products });
   } catch (error) {
     console.error("Error al obtener productos:", error);
 
