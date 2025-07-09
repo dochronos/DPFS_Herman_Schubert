@@ -1,5 +1,5 @@
 const { validationResult } = require("express-validator");
-const { findUserByEmail } = require("../service/userRepository");
+const { getUserByEmail } = require("../service/userRepository");
 const { verifyPassword } = require("../service/password");
 
 const auth = {
@@ -34,9 +34,18 @@ const auth = {
       }
 
       const { email, password, rememberMe } = req.body;
-      const user = await findUserByEmail(email);
+      const user = await getUserByEmail(email);
 
-      if (!user || !verifyPassword(password, user.password)) {
+      if (!user) {
+        return res.render("users/login", {
+          error: "Credenciales incorrectas.",
+          email: req.body.email,
+        });
+      }
+
+      const isPasswordValid = await verifyPassword(password, user.password);
+
+      if (!isPasswordValid) {
         return res.render("users/login", {
           error: "Credenciales incorrectas.",
           email: req.body.email,
@@ -64,6 +73,7 @@ const auth = {
       console.error(error);
       return res.status(500).render("error", {
         message: "Ocurrió un error inesperado. Intente nuevamente más tarde.",
+        error,
       });
     }
   },

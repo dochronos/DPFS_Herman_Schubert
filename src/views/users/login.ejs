@@ -5,70 +5,82 @@
 <body>
   <%- include('../partials/header.ejs') %>
 
-  <main class="container my-5">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <form id="loginForm" action="/users/login" method="POST" class="border rounded p-4 shadow bg-light">
-          <h2 class="mb-4 text-center fw-bold" style="font-family: 'Montserrat', sans-serif;">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000" class="me-2">
-              <path d="M240-80q-33 0-56.5-23.5T160-160v-400q0-33 23.5-56.5T240-640h40v-80q0-83 58.5-141.5T480-920q83 0 141.5 58.5T680-720v80h40q33 0 56.5 23.5T800-560v400q0 33-23.5 56.5T720-80H240Zm0-80h480v-400H240v400Zm240-120q33 0 56.5-23.5T560-360q0-33-23.5-56.5T480-440q-33 0-56.5 23.5T400-360q0 33 23.5 56.5T480-280ZM360-640h240v-80q0-50-35-85t-85-35q-50 0-85 35t-35 85v80Z"/>
-            </svg>
-            Iniciar sesión
-          </h2>
+  <main class="my-5 pt-4">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6 border rounded p-4 shadow bg-light">
 
-          <!-- Email -->
-          <div class="mb-3">
-            <label for="email" class="form-label">Correo electrónico</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              class="form-control"
-              autocomplete="off"
-              autofocus
-              value="<%= typeof email !== 'undefined' ? email : '' %>"
-              aria-describedby="emailError"
-            />
-            <div id="emailError" class="text-danger small"></div>
-          </div>
+          <form id="loginForm" action="/users/login" method="POST" class="needs-validation" novalidate>
+            <h2 class="mb-4 fw-bold text-center" style="font-family: 'Garamond', serif;">
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000" class="me-2">
+                <path d="M240-80q-33 0-56.5-23.5T160-160v-400q0-33 23.5-56.5T240-640h40v-80q0-83 58.5-141.5T480-920q83 0 141.5 58.5T680-720v80h40q33 0 56.5 23.5T800-560v400q0 33-23.5 56.5T720-80H240Zm0-80h480v-400H240v400Zm240-120q33 0 56.5-23.5T560-360q0-33-23.5-56.5T480-440q-33 0-56.5 23.5T400-360q0 33 23.5 56.5T480-280ZM360-640h240v-80q0-50-35-85t-85-35q-50 0-85 35t-35 85v80Z"/>
+              </svg>
+              Iniciar sesión
+            </h2>
 
-          <!-- Password -->
-          <div class="mb-3 position-relative">
-            <label for="password" class="form-label">Contraseña</label>
-            <div class="input-group">
+            <% if (typeof error !== 'undefined') { %>
+              <div class="alert alert-danger text-center">
+                <%= error %>
+              </div>
+            <% } %>
+
+            <!-- Email -->
+            <div class="mb-3">
+              <label for="email" class="form-label">Correo electrónico</label>
               <input
-                type="password"
-                id="password"
-                name="password"
+                type="email"
+                id="email"
+                name="email"
                 class="form-control"
                 autocomplete="off"
-                aria-describedby="passwordError"
+                autofocus
+                value="<%= typeof email !== 'undefined' ? email : '' %>"
+                required
+                aria-describedby="emailError"
               />
-              <span class="input-group-text" id="togglePassword" style="cursor: pointer;">
-                <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                     width="24px" fill="#000000">
-                  <path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Z"/>
-                </svg>
-              </span>
+              <div id="emailError" class="text-danger small"></div>
             </div>
-            <div id="passwordError" class="text-danger small"></div>
-          </div>
 
-          <!-- Remember session -->
-          <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="rememberSession" name="rememberSession">
-            <label class="form-check-label" for="rememberSession">Recordar sesión</label>
-          </div>
+            <!-- Password -->
+            <div class="mb-3 position-relative">
+              <label for="password" class="form-label">Contraseña</label>
+              <div class="input-group">
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  class="form-control"
+                  autocomplete="off"
+                  required
+                  aria-describedby="passwordError"
+                />
+                <span class="input-group-text" id="togglePassword" style="cursor: pointer;">
+                  <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                       width="24px" fill="#000000">
+                    <path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Z"/>
+                  </svg>
+                </span>
+              </div>
+              <div id="passwordError" class="text-danger small"></div>
+            </div>
 
-          <!-- Submit -->
-          <button type="submit" class="btn btn-primary w-100 mb-3">Iniciar sesión</button>
+            <!-- Remember session -->
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
+              <label class="form-check-label" for="rememberMe">Recordar sesión</label>
+            </div>
 
-          <!-- Links -->
-          <div class="text-center">
-            <a href="#" class="d-block mb-2">¿Olvidaste tu contraseña?</a>
-            <a href="/users/create" class="btn btn-outline-success w-100">Registrarse</a>
-          </div>
-        </form>
+            <!-- Submit -->
+            <button type="submit" class="btn btn-primary w-100 mb-3">Iniciar sesión</button>
+
+            <!-- Links -->
+            <div class="text-center">
+              <a href="#" class="d-block mb-2">¿Olvidaste tu contraseña?</a>
+              <a href="/users/create" class="btn btn-outline-success w-100">Registrarse</a>
+            </div>
+          </form>
+
+        </div>
       </div>
     </div>
   </main>

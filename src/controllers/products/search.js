@@ -18,16 +18,15 @@ const search = async (req, res) => {
         where(fn("LOWER", col("Product.name")), "LIKE", `%${searchQuery}%`),
         where(fn("LOWER", col("Brand.name")), "LIKE", `%${searchQuery}%`),
         where(fn("LOWER", col("Category.name")), "LIKE", `%${searchQuery}%`),
-        // Puedes activar esta línea si deseas buscar por descripción también
-        // where(fn("LOWER", col("Product.description")), "LIKE", `%${searchQuery}%`)
+        // where(fn("LOWER", col("Product.description")), "LIKE", `%${searchQuery}%`) // Activar si se desea
       ],
     };
 
     const products = await db.Product.findAll({
       include: [
-        { model: db.Brand, required: false },
-        { model: db.Category, required: false },
-        // { model: db.Color, required: false } // Activar si querés buscar por colores
+        { model: db.Brand, as: "Brand", required: false },
+        { model: db.Category, as: "Category", required: false },
+        // { model: db.Color, as: "Colors", required: false } // Activar si es necesario
       ],
       where: searchConditions,
     });

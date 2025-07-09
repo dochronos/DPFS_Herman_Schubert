@@ -1,4 +1,4 @@
-const { findUserByEmail } = require("../../service/userRepository");
+const { getUserByEmail: findUserByEmail } = require("../../service/userRepository");
 const { verifyPassword } = require("../../service/password");
 
 /**

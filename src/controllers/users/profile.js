@@ -1,18 +1,23 @@
-const { findUserById } = require("../../service/userRepository");
+const { getUserById } = require("../../service/userRepository");
 
 module.exports = async function show(req, res) {
   try {
+    // Verificamos si hay sesión activa
     if (!req.session.user) {
-      return res.status(401).send("Debés iniciar sesión para acceder a tu perfil.");
+      return res.status(401).render("error", {
+        message: "Debés iniciar sesión para acceder a tu perfil.",
+        error: { status: 401 },
+      });
     }
 
-    const userId = parseInt(req.session.user.id, 10);
-    const user = await findUserById(userId);
+    const userId = parseInt(req.params.id, 10);
+    const user = await getUserById(userId);
 
+    // Validamos si existe el usuario
     if (!user) {
       return res.status(404).render("error", {
         message: "Usuario no encontrado.",
-        error: {},
+        error: { status: 404 },
       });
     }
 

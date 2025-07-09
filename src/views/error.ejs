@@ -16,11 +16,11 @@
         <%= message %>
       </h2>
 
-      <% if (error.status) { %>
+      <% if (typeof error !== 'undefined' && error?.status) { %>
         <p class="text-secondary">Código de estado: <strong><%= error.status %></strong></p>
       <% } %>
 
-      <% if (error.stack) { %>
+      <% if (typeof error !== 'undefined' && error?.stack) { %>
         <div class="text-start mt-4 p-3 bg-white border rounded shadow-sm overflow-auto">
           <pre class="small text-secondary"><%= error.stack %></pre>
         </div>

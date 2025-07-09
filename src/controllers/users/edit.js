@@ -3,18 +3,22 @@ const { hashPassword } = require("../../service/password");
 const {
   isEmailInUseByOtherUser,
   updateUser,
-  findUserById,
+  getUserById, // ← CORREGIDO
 } = require("../../service/userRepository");
 
 const editController = {
+  // Mostrar formulario de edición
   edit: async (req, res) => {
     const userId = parseInt(req.session.user.id, 10);
 
     try {
-      const user = await findUserById(userId);
+      const user = await getUserById(userId); // ← CORREGIDO
 
       if (!user) {
-        return res.status(404).send("Usuario no encontrado.");
+        return res.status(404).render("error", {
+          message: "Usuario no encontrado.",
+          error: {},
+        });
       }
 
       return res.render("users/edit", {
@@ -25,16 +29,27 @@ const editController = {
       });
     } catch (error) {
       console.error("🧑‍💻 Error al obtener el usuario:", error);
-      return res.status(500).send("Error al obtener el usuario.");
+      return res.status(500).render("error", {
+        message: "Error al obtener el usuario.",
+        error,
+      });
     }
   },
 
+  // Procesar actualización del usuario
   update: async (req, res) => {
     const userId = req.session.user.id;
     const errors = validationResult(req);
 
     try {
-      const user = await findUserById(userId);
+      const user = await getUserById(userId); // ← CORREGIDO
+
+      if (!user) {
+        return res.status(404).render("error", {
+          message: "Usuario no encontrado.",
+          error: {},
+        });
+      }
 
       if (!errors.isEmpty()) {
         return res.status(400).render("users/edit", {
@@ -52,9 +67,10 @@ const editController = {
       if (lastName) updates.lastName = lastName;
       if (email) updates.email = email;
       if (req.file) updates.profileImage = req.file.filename;
-      if (passwordEdit) updates.password = hashPassword(passwordEdit);
+      if (passwordEdit) updates.password = await hashPassword(passwordEdit); // ← aseguramos await
 
-      if (email) {
+      // Validar email en uso
+      if (email && email !== user.email) {
         const existingUser = await isEmailInUseByOtherUser(email, userId);
         if (existingUser) {
           return res.status(400).render("users/edit", {
