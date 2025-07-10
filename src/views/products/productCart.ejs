@@ -27,10 +27,10 @@
             <% cartItems.forEach(item => { %>
               <tr class="text-center">
                 <td class="text-start">
-                  <strong class="d-block"><%= item.Product.name %></strong>
-                  <small class="text-muted"><%= item.Product.description %></small>
+                  <strong class="d-block"><%= item.product.name %></strong>
+                  <small class="text-muted"><%= item.product.description %></small>
                 </td>
-                <td class="text-nowrap">$<%= Number(item.Product.price).toFixed(2) %></td>
+                <td class="text-nowrap">$<%= Number(item.product.price).toFixed(2) %></td>
                 <td><%= item.quantity %></td>
                 <td class="text-nowrap">$<%= Number(item.price).toFixed(2) %></td>
                 <td>

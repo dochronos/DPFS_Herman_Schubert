@@ -16,25 +16,20 @@ const deleteProduct = require("../../controllers/products/delete");
 const show = require("../../controllers/products/show");
 const cartControllers = require("../../controllers/products/cart");
 
-// 📦 Productos
-router.get("/", async (req, res) => {
-  try {
-    const products = await getAllProducts();
-    res.render("products/productList", { data: products }); // ✅ Cambio clave: { data: products }
-  } catch (error) {
-    console.error("🛒 Error al obtener los productos:", error);
-    res.status(500).render("error", {
-      message: "Error al obtener los productos.",
-      error,
-    });
-  }
-});
+// 🛒 Carrito (deben ir antes de las rutas con :id)
+router.get("/cart", cartControllers.showCart);
+router.post("/addItem/:id", cartControllers.addToCart);
+router.post("/cart/increase/:id", cartControllers.increaseItem);
+router.post("/cart/decrease/:id", cartControllers.decreaseItem);
+router.post("/cart/remove/:id", cartControllers.removeItem);
+router.post("/checkout", cartControllers.checkout);
 
+// 🔍 Búsqueda
 router.get("/search", search);
+
+// 🛠️ Admin: Crear / Editar / Eliminar productos
 router.get("/create", authorize("admin"), create);
 router.get("/:id/edit", authorize("admin"), edit);
-router.get("/:id", show);
-
 router.post(
   "/",
   authorize("admin"),
@@ -51,12 +46,21 @@ router.put(
 );
 router.delete("/:id", authorize("admin"), deleteProduct);
 
-// 🛒 Carrito
-router.get("/cart", cartControllers.showCart);
-router.post("/addItem/:id", cartControllers.addToCart);
-router.post("/cart/increase/:id", cartControllers.increaseItem);
-router.post("/cart/decrease/:id", cartControllers.decreaseItem);
-router.post("/cart/remove/:id", cartControllers.removeItem);
-router.post("/checkout", cartControllers.checkout);
+// 📦 Vista general de productos
+router.get("/", async (req, res) => {
+  try {
+    const products = await getAllProducts();
+    res.render("products/productList", { data: products });
+  } catch (error) {
+    console.error("🛒 Error al obtener los productos:", error);
+    res.status(500).render("error", {
+      message: "Error al obtener los productos.",
+      error,
+    });
+  }
+});
+
+// 📄 Detalle de producto
+router.get("/:id", show);
 
 module.exports = router;

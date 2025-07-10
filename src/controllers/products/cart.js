@@ -56,27 +56,42 @@ const cartControllers = {
 
   showCart: async (req, res) => {
     try {
-      const userId = req.session.user.id;
+      const userId = req.session?.user?.id;
+      if (!userId) {
+        return res.redirect("/users/require-login");
+      }
 
       const cart = await db.ShoppingCart.findOne({
         where: { user_id: userId },
-        include: [{ model: db.CartItem, include: [db.Product] }],
+        include: [
+          {
+            model: db.CartItem,
+            as: "items",
+            include: [
+              {
+                model: db.Product,
+                as: "product",
+              },
+            ],
+          },
+        ],
       });
 
-      if (!cart || cart.CartItems.length === 0) {
-        return res.render("products/productCart", {
-          cartItems: [],
-          cartTotal: 0,
-        });
-      }
+      const cartItems = cart?.items || [];
+      const cartTotal = cartItems.length
+        ? cartItems.reduce((sum, item) => sum + Number(item.price), 0)
+        : 0;
 
-      const cartItems = cart.CartItems;
-      const cartTotal = cartItems.reduce((sum, item) => sum + Number(item.price), 0);
-
-      res.render("products/productCart", { cartItems, cartTotal });
+      return res.render("products/productCart", {
+        cartItems,
+        cartTotal,
+      });
     } catch (error) {
-      console.error("🛒 Error en showCart:", error.message);
-      res.status(500).send("No se pudo mostrar el carrito.");
+      console.error("🛒 Error en showCart:", error);
+      return res.status(500).render("error", {
+        message: "No se pudo mostrar el carrito.",
+        error,
+      });
     }
   },
 
@@ -158,15 +173,12 @@ const cartControllers = {
 
       const cartItems = await db.CartItem.findAll({
         where: { cart_id: cart.id },
-        include: [{ model: db.Product }],
+        include: [{ model: db.Product, as: "product" }],
       });
 
       if (!cartItems.length) return res.status(400).send("El carrito está vacío.");
 
       for (const item of cartItems) {
-        const product = await db.Product.findByPk(item.product_id);
-        if (!product) return res.status(404).send(`Producto con ID ${item.product_id} no encontrado.`);
-
         await db.Sale.create({
           user_id: userId,
           product_id: item.product_id,
