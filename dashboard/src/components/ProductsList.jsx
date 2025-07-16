@@ -27,7 +27,7 @@ const ProductsList = () => {
         {products.map((product) => (
           <div key={product.id} className="card">
             <img
-              src={`/images/quantumbloom/${product.image}`}
+              src={product.imageUrl}
               alt={product.name}
               className="card-img-top"
               style={{ width: "100%", height: "180px", objectFit: "cover", borderRadius: "12px" }}

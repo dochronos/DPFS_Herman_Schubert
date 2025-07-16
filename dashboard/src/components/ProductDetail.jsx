@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import api from "../services/api";
+import { fetchProductDetail } from "../services/api";
 import "../styles/dashboard.css";
 
 const ProductDetail = () => {
@@ -10,10 +10,9 @@ const ProductDetail = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    api
-      .get(`/products/${id}`)
+    fetchProductDetail(id)
       .then((res) => {
-        setProduct(res.data);
+        setProduct(res);
       })
       .catch((err) => {
         console.error("Error al obtener producto:", err.message);
@@ -29,7 +28,7 @@ const ProductDetail = () => {
       <h2 className="section-title">{product.name}</h2>
       <div className="product-detail-content">
         <img
-          src={`/images/quantumbloom/${product.image}`}
+          src={product.imageUrl}
           alt={product.name}
           className="product-detail-image"
         />

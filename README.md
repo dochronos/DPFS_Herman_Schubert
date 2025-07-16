@@ -34,7 +34,7 @@ Quantum Bloom Space es una tienda online inspirada en el minimalismo, la calma y
 
 ### 1. Clonar el repositorio
 
-```bash
+bash
 git clone https://github.com/dochronos/DPFS_Herman_Schubert.git
 cd DPFS_Herman_Schubert
 

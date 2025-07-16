@@ -8,36 +8,27 @@ const publicAPI = axios.create({
   baseURL: BASE_URL,
 });
 
-// 🔒 Instancia autenticada (cookies, headers, etc.)
-const privateAPI = axios.create({
-  baseURL: BASE_URL,
-  withCredentials: true,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
-// 📤 Exportación unificada
+// 📤 Exportación unificada por defecto
 export default publicAPI;
 
-// 🧑‍💼 Servicios privados: usuarios (requiere sesión)
+// 🧑‍💼 Servicios públicos: usuarios (no requiere sesión)
 export const fetchUsers = async () => {
-  const res = await privateAPI.get("/users");
+  const res = await publicAPI.get("/users/public");
   return res.data;
 };
 
 export const fetchUserDetail = async (id) => {
-  const res = await privateAPI.get(`/users/${id}`);
+  const res = await publicAPI.get(`/users/${id}`);
   return res.data;
 };
 
-// 🛍️ Servicios privados: productos (requiere sesión)
+// 🛍️ Productos – acceso público
 export const fetchProducts = async () => {
-  const res = await privateAPI.get("/products");
+  const res = await publicAPI.get("/products/public");
   return res.data;
 };
 
 export const fetchProductDetail = async (id) => {
-  const res = await privateAPI.get(`/products/${id}`);
+  const res = await publicAPI.get(`/products/public/${id}`);
   return res.data;
 };
