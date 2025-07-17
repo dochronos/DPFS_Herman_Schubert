@@ -38,24 +38,37 @@ bash
 git clone https://github.com/dochronos/DPFS_Herman_Schubert.git
 cd DPFS_Herman_Schubert
 
-Backend
+---
+
+### 2. Backend
 
 cd backend
 npm install
 
-🔧 Configurar base de datos: Asegurate de tener un servidor MySQL activo y completar tus credenciales en src/database/config/config.js.
+🔧 Configuración de base de datos: Asegurate de tener un servidor MySQL activo y completar tus credenciales en src/database/config/config.js.
 
-npm run db:sync     # Crea las tablas
-npm run db:seed     # Carga datos de prueba (usuarios, productos, etc.)
-npm run dev         # Inicia el servidor en http://localhost:3000
+# Crear y poblar la base de datos
+npx sequelize db:drop
+npx sequelize db:create
+npx sequelize db:migrate
+npx sequelize db:seed:all
 
-Frontend (Dashboard React)
+# Iniciar el servidor backend
+npm run dev
+
+Acceso backend: http://localhost:3000
+
+---
+
+### 3. Frontend (Dashboard React)
 
 cd dashboard
 npm install
 npm run dev
 
-Acceso: http://localhost:5173
+Acceso dashboard: http://localhost:5173
+
+---
 
 🗂️ Estructura de carpetas
 
@@ -77,7 +90,10 @@ DPFS_Herman_Schubert/
     ├── DER.html
     └── retro.md
 
+---
+
 ✅ Funcionalidades principales
+
 👤 Usuarios
 Registro, login, edición y eliminación de perfil
 
@@ -86,6 +102,14 @@ Carga de imagen de perfil
 Roles diferenciados: usuario común y administrador
 
 Middleware para recordar sesión y proteger rutas privadas
+
+Admin: camila.ortega@quantumbloom.com
+Password:123
+
+User: lucia.mendez@gmail.com
+Password:123
+
+---
 
 🛒 Carrito de compras
 Agregar, aumentar, disminuir y eliminar productos
@@ -96,6 +120,8 @@ Persistencia por sesión
 
 Confirmación de compra y registro de ventas
 
+---
+
 📦 Productos
 Alta, baja, edición y detalle
 
@@ -105,12 +131,16 @@ Validaciones robustas (express-validator)
 
 Imágenes y descripción detallada
 
+---
+
 📊 Dashboard administrativo (React)
 SPA con estadísticas gráficas en tiempo real
 
 Gráficos de productos más vendidos, usuarios, categorías y marcas
 
 Consumo de API RESTful vía Fetch
+
+---
 
 🔐 Seguridad y validaciones
 Hash de contraseñas con bcrypt
@@ -119,37 +149,45 @@ Middleware de autenticación y autorización
 
 Validaciones frontend y backend
 
+---
+
 🔎 Documentación de API
 Swagger UI accesible desde /api-docs
 
 Estructura clara de endpoints RESTful
 
+---
+
 🌐 Sitios de referencia e inspiración
 Durante el diseño y desarrollo de Quantum Bloom Space, se tomaron como referencia los siguientes sitios por su estética, experiencia de usuario o propuesta visual:
 
 https://www.typology.com/
-↳ Inspiración para una estética minimalista y uso de tonos suaves. Su enfoque en el espacio blanco y la tipografía clara sirvió como guía para transmitir calma y sofisticación.
+↳ Inspiración para una estética minimalista y uso de tonos suaves.
 
 https://www.muji.com/
-↳ Referencia clave para estructura simple, navegación intuitiva y filosofía centrada en lo esencial. Su diseño fue modelo para mantener una experiencia limpia y ordenada.
+↳ Referencia clave para estructura simple, navegación intuitiva y filosofía centrada en lo esencial.
 
 https://www.papersource.com/
-↳ Tomamos inspiración de este sitio por su enfoque en papelería y regalos. Nos ayudó a entender cómo presentar planners, accesorios y objetos para el bienestar diario.
+↳ Inspiración por su enfoque en papelería y regalos.
 
 https://www.oysho.com/
-↳ Aportó ideas sobre paleta cromática suave y armoniosa. También fue útil para observar cómo incorporar imágenes de producto emocionalmente atractivas.
+↳ Aportó ideas sobre paleta cromática suave y cómo mostrar productos emocionalmente atractivos.
 
 https://notion.so/
-↳ Aunque no es una tienda, sirvió como inspiración por su enfoque zen, estilo visual relajado y consistencia tipográfica. Fue clave para definir la identidad visual del dashboard.
+↳ Aunque no es una tienda, inspiró el estilo visual relajado y consistente del dashboard.
+
+---
 
 🧠 Reflexión
-Este proyecto fue desarrollado como parte del curso Desarrollo Web Full Stack de Digital House. Aplicamos buenas prácticas de arquitectura backend, diseño web y consumo de APIs, logrando una solución funcional y visualmente coherente con los valores de la marca QuantumBloom.
+Este proyecto fue desarrollado como parte del curso Desarrollo Web Full Stack de Digital House. Aplicamos buenas prácticas de arquitectura backend, diseño web y consumo de APIs, logrando una solución funcional y visualmente coherente con los valores de la marca Quantum Bloom.
 
-📝 Ver retroalimentación completa
+---
 
 👨‍💻 Autor
 Herman Schubert – Desarrollador Full Stack
 📧 hermand.schubert@gmail.com
+
+---
 
 📄 Licencia
 MIT – Uso educativo y no comercial.
